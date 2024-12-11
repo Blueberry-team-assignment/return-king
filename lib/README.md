@@ -1,3 +1,5 @@
+#### 디렉토리 구조
+```
 /lib
 ├── core                  
 │   ├── error_handling.dart   # 공통 에러 처리
@@ -21,3 +23,4 @@
 │   │   │   └── pages
 │   │   │       └── counter_page.dart          # UI 화면
 ├── main.dart             # 앱 진입점
+```
