@@ -35,7 +35,8 @@ class LocalDataSource {
 
   Future<void> initializeTable() async {
     final db = await database;
-    final count = Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $_tableName'));
+    final count = Sqflite.firstIntValue(
+        await db.rawQuery('SELECT COUNT(*) FROM $_tableName'));
     if (count == 0) {
       await db.insert(_tableName, {_columnValue: 0});
     }

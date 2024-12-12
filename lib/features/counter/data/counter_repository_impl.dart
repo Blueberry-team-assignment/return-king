@@ -1,18 +1,18 @@
-import 'package:return_king/features/counter/data/local_data_source.dart';
+import 'package:return_king/features/counter/data/firebase_data_source.dart';
 import 'package:return_king/features/counter/domain/repositories/counter_repository.dart';
 
 class CounterRepositoryImpl implements CounterRepository {
-  final LocalDataSource localDataSource;
+  final FirebaseDataSource firebaseDataSource;
 
-  CounterRepositoryImpl(this.localDataSource);
+  CounterRepositoryImpl(this.firebaseDataSource);
 
   @override
   Future<int> fetchCounter() {
-    return localDataSource.fetchCounter();
+    throw Exception();
   }
 
   @override
   Future<void> saveCounter(int value) {
-    return localDataSource.saveCounter(value);
+    throw Exception();
   }
 }
