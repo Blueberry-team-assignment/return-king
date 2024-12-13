@@ -6,7 +6,7 @@ class FirebaseDataSource {
   // 데이터 읽기
   void fetchData() {
     _database.child('room').onValue.listen((DatabaseEvent event) {
-      final data = event.snapshot.value;
+      event.snapshot.value;
     });
   }
 }
