@@ -3,5 +3,4 @@ class Counter {
 
   // 생성자
   Counter(this.value);
-
 }
