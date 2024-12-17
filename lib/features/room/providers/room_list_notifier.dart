@@ -11,25 +11,21 @@ class RoomListNotifier extends StateNotifier<List<Room>> {
 
   Future<void> fetchRooms() async {
     List<Timeline> timelines = await timelineNotifier.getTimeLine();
-    timelines.sort((a, b) => a.createdAt.millisecondsSinceEpoch.compareTo(b.createdAt.millisecondsSinceEpoch));
-    List<Room> rooms = [
-      Room(
-        id: 'room1',
-        name: 'Family',
-        createdAt: DateTime.now().subtract(const Duration(days: 5)),
+    timelines.sort((a, b) => a.createdAt.millisecondsSinceEpoch
+        .compareTo(b.createdAt.millisecondsSinceEpoch));
+    List<Room> rooms = List.generate(30, (index) {
+      final Timeline timeline = timelines
+          .where((timeline) => timeline.roomId == 'room${index + 1}')
+          .first;
+      return Room(
+        id: 'room${index + 1}',
+        name: 'Room ${index + 1}',
+        createdAt: DateTime.now().subtract(Duration(days: 30 - index)),
         deleted: false,
-        lastTimelineId: 'timeline1',
-        lastTimeline: timelines.where((timeline) => timeline.roomId == 'room1').first
-      ),
-      Room(
-        id: 'room2',
-        name: 'Friends',
-        createdAt: DateTime.now().subtract(const Duration(days: 3)),
-        deleted: false,
-        lastTimelineId: 'timeline3',
-        lastTimeline: timelines.where((timeline) => timeline.roomId == 'room2').first
-      ),
-    ];
+        lastTimelineId: timeline.id,
+        lastTimeline: timeline,
+      );
+    });
     state = rooms;
   }
 

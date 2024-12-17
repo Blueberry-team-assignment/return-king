@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:return_king/features/room/domain/models/room.dart';
 import 'package:return_king/features/room/presentation/atoms/buttons/basic_button.dart';
 import 'package:return_king/features/room/providers/room_providers.dart';
 
 class RoomList extends ConsumerWidget {
-  const RoomList({super.key});
+  const RoomList({super.key, required this.roomList});
+
+  final List<Room> roomList;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final hasRooms = ref.watch(roomListProvider);
-    final items = ['hoge'];
     return hasRooms.isEmpty
         ? Center(
             child: BasicButton(
@@ -17,11 +19,11 @@ class RoomList extends ConsumerWidget {
                 onPressed: () => {}),
           )
         : ListView.builder(
-            itemCount: items.length,
+            itemCount: roomList.length,
             itemBuilder: (context, index) {
-              final item = items[index];
+              final item = roomList[index];
               return Dismissible(
-                key: Key(item),
+                key: Key(item.id),
                 background: Container(color: Colors.green),
                 secondaryBackground: Container(color: Colors.red),
                 onDismissed: (direction) {
@@ -34,7 +36,7 @@ class RoomList extends ConsumerWidget {
                     SnackBar(content: Text('$item dismissed')),
                   );
                 },
-                child: ListTile(title: Text(item)),
+                child: ListTile(title: Text(item.name)),
               );
             },
           );
