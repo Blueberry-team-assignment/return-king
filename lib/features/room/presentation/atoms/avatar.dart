@@ -6,8 +6,6 @@ class Avatar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
-      child: const Text('avatar'),
-    );
+    return const Text('avatar');
   }
 }

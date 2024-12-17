@@ -13,7 +13,7 @@ class TimelineNotifier extends StateNotifier<List<Timeline>> {
         roomId: 'room1',
         senderType: 'receiver',
         content: 'Received a birthday gift from Mom',
-        createdAt: DateTime.now().subtract(Duration(days: 4)),
+        createdAt: DateTime.now().subtract(const Duration(days: 4)),
         deleted: false,
       ),
       Timeline(
@@ -21,7 +21,7 @@ class TimelineNotifier extends StateNotifier<List<Timeline>> {
         roomId: 'room1',
         senderType: 'sender',
         content: 'Sent a thank you gift to Dad',
-        createdAt: DateTime.now().subtract(Duration(days: 2)),
+        createdAt: DateTime.now().subtract(const Duration(days: 2)),
         deleted: false,
       ),
       Timeline(
@@ -29,7 +29,7 @@ class TimelineNotifier extends StateNotifier<List<Timeline>> {
         roomId: 'room2',
         senderType: 'sender',
         content: 'Sent flowers to Alex',
-        createdAt: DateTime.now().subtract(Duration(days: 3)),
+        createdAt: DateTime.now().subtract(const Duration(days: 3)),
         deleted: false,
       ),
       Timeline(
@@ -37,7 +37,7 @@ class TimelineNotifier extends StateNotifier<List<Timeline>> {
         roomId: 'room2',
         senderType: 'receiver',
         content: 'Received a coffee mug from Lisa',
-        createdAt: DateTime.now().subtract(Duration(days: 1)),
+        createdAt: DateTime.now().subtract(const Duration(days: 1)),
         deleted: false,
       ),
     ];

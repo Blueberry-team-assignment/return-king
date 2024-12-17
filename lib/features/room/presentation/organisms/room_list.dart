@@ -10,7 +10,6 @@ class RoomList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final hasRooms = ref.watch(roomListProvider);
     final items = ['hoge'];
-    print('hoge: ${hasRooms.isNotEmpty}');
     return hasRooms.isEmpty
         ? Center(
             child: BasicButton(
