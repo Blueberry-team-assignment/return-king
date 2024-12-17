@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:return_king/features/counter/domain/usecases/decrement_counter.dart';
-import 'package:return_king/features/counter/domain/usecases/increment_counter.dart';
+import 'package:return_king/features/counter/domain/usecases/counter/decrement_counter.dart';
+import 'package:return_king/features/counter/domain/usecases/counter/increment_counter.dart';
 
 class CounterNotifier extends StateNotifier<int> {
   final IncrementCounter incrementCounter;

@@ -1,0 +1,1 @@
+enum SenderType { sender, receiver }
