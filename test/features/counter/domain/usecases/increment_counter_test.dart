@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:return_king/features/counter/domain/usecases/increment_counter.dart';
+import 'package:return_king/features/counter/domain/usecases/counter/increment_counter.dart';
 
 void main() {
   group('IncrementCounter', () {
