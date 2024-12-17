@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:return_king/features/timeline/domain/models/timeline.dart';
 
@@ -7,40 +9,25 @@ class TimelineNotifier extends StateNotifier<List<Timeline>> {
   }
 
   Future<void> fetchTimelines() async {
-    state = [
-      Timeline(
-        id: 'timeline1',
-        roomId: 'room1',
-        senderType: 'receiver',
-        content: 'Received a birthday gift from Mom',
-        createdAt: DateTime.now().subtract(const Duration(days: 4)),
-        deleted: false,
-      ),
-      Timeline(
-        id: 'timeline2',
-        roomId: 'room1',
-        senderType: 'sender',
-        content: 'Sent a thank you gift to Dad',
-        createdAt: DateTime.now().subtract(const Duration(days: 2)),
-        deleted: false,
-      ),
-      Timeline(
-        id: 'timeline3',
-        roomId: 'room2',
-        senderType: 'sender',
-        content: 'Sent flowers to Alex',
-        createdAt: DateTime.now().subtract(const Duration(days: 3)),
-        deleted: false,
-      ),
-      Timeline(
-        id: 'timeline4',
-        roomId: 'room2',
-        senderType: 'receiver',
-        content: 'Received a coffee mug from Lisa',
-        createdAt: DateTime.now().subtract(const Duration(days: 1)),
-        deleted: false,
-      ),
-    ];
+    List<Timeline> timelines = [];
+    final random = Random();
+    for (int roomIndex = 1; roomIndex <= 30; roomIndex++) {
+      for (int timelineIndex = 1; timelineIndex <= 5; timelineIndex++) {
+        timelines.add(
+          Timeline(
+            id: 'timeline${(roomIndex - 1) * 5 + timelineIndex}',
+            roomId: 'room$roomIndex',
+            senderType: random.nextBool() ? 'sender' : 'receiver',
+            content:
+                '샘플 데이터 룸: $roomIndex - 타임라인 $timelineIndex',
+            createdAt: DateTime.now()
+                .subtract(Duration(days: random.nextInt(30))),
+            deleted: false,
+          ),
+        );
+      }
+    }
+    state = timelines;
   }
 
   Future<List<Timeline>> getTimeLine() async {
