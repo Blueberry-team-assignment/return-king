@@ -3,15 +3,18 @@ targets:
     builders:
       source_gen|combining_builder:
         generate_for:
-          - lib/features/models/**.dart
-          - lib/features/dto/**.dart
+          - lib/features/room/domain/models/**.dart
+          - lib/features/timeline/domain/models/**.dart
+          # - lib/features/dto/**.dart
         options:
           build_extensions:
-            '^lib/features/models/{{}}.dart': 'lib/features/models/generated/{{}}.g.dart'
-            '^lib/features/dto/{{}}.dart': 'lib/features/dto/generated/{{}}.g.dart'
+            '^lib/features/room/domain/models/{{}}.dart': 'lib/features/room/domain/models/generated/{{}}.g.dart'
+            '^lib/features/timeline/domain/models/{{}}.dart': 'lib/features/timeline/domain/models/generated/{{}}.g.dart'
+            # '^lib/features/dto/{{}}.dart': 'lib/features/dto/generated/{{}}.g.dart'
       freezed|freezed:
         enabled: true
         options:
           build_extensions:
-            '^lib/features/models/{{}}.dart': 'lib/features/models/generated/{{}}.freezed.dart'
-            '^lib/features/dto/{{}}.dart': 'lib/features/dto/generated/{{}}.freezed.dart'
+            '^lib/features/room/domain/models/{{}}.dart': 'lib/features/room/domain/models/generated/{{}}.freezed.dart'
+            '^lib/features/timeline/domain/models/{{}}.dart': 'lib/features/timeline/domain/models/generated/{{}}.freezed.dart'
+            # '^lib/features/dto/{{}}.dart': 'lib/features/dto/generated/{{}}.freezed.dart'
