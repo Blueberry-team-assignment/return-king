@@ -24,9 +24,9 @@ mixin _$Room {
   String get name => throw _privateConstructorUsedError; // Room 이름
   DateTime get createdAt => throw _privateConstructorUsedError; // 생성 날짜 및 시간
   bool get deleted => throw _privateConstructorUsedError; // 삭제 여부
-  String? get lastTimelineId =>
+  String get lastTimelineId =>
       throw _privateConstructorUsedError; // 최신 Timeline의 ID (nullable)
-  Timeline? get lastTimeline => throw _privateConstructorUsedError;
+  Timeline get lastTimeline => throw _privateConstructorUsedError;
 
   /// Serializes this Room to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -47,10 +47,10 @@ abstract class $RoomCopyWith<$Res> {
       String name,
       DateTime createdAt,
       bool deleted,
-      String? lastTimelineId,
-      Timeline? lastTimeline});
+      String lastTimelineId,
+      Timeline lastTimeline});
 
-  $TimelineCopyWith<$Res>? get lastTimeline;
+  $TimelineCopyWith<$Res> get lastTimeline;
 }
 
 /// @nodoc
@@ -72,8 +72,8 @@ class _$RoomCopyWithImpl<$Res, $Val extends Room>
     Object? name = null,
     Object? createdAt = null,
     Object? deleted = null,
-    Object? lastTimelineId = freezed,
-    Object? lastTimeline = freezed,
+    Object? lastTimelineId = null,
+    Object? lastTimeline = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -92,14 +92,14 @@ class _$RoomCopyWithImpl<$Res, $Val extends Room>
           ? _value.deleted
           : deleted // ignore: cast_nullable_to_non_nullable
               as bool,
-      lastTimelineId: freezed == lastTimelineId
+      lastTimelineId: null == lastTimelineId
           ? _value.lastTimelineId
           : lastTimelineId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      lastTimeline: freezed == lastTimeline
+              as String,
+      lastTimeline: null == lastTimeline
           ? _value.lastTimeline
           : lastTimeline // ignore: cast_nullable_to_non_nullable
-              as Timeline?,
+              as Timeline,
     ) as $Val);
   }
 
@@ -107,12 +107,8 @@ class _$RoomCopyWithImpl<$Res, $Val extends Room>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $TimelineCopyWith<$Res>? get lastTimeline {
-    if (_value.lastTimeline == null) {
-      return null;
-    }
-
-    return $TimelineCopyWith<$Res>(_value.lastTimeline!, (value) {
+  $TimelineCopyWith<$Res> get lastTimeline {
+    return $TimelineCopyWith<$Res>(_value.lastTimeline, (value) {
       return _then(_value.copyWith(lastTimeline: value) as $Val);
     });
   }
@@ -130,11 +126,11 @@ abstract class _$$RoomImplCopyWith<$Res> implements $RoomCopyWith<$Res> {
       String name,
       DateTime createdAt,
       bool deleted,
-      String? lastTimelineId,
-      Timeline? lastTimeline});
+      String lastTimelineId,
+      Timeline lastTimeline});
 
   @override
-  $TimelineCopyWith<$Res>? get lastTimeline;
+  $TimelineCopyWith<$Res> get lastTimeline;
 }
 
 /// @nodoc
@@ -153,8 +149,8 @@ class __$$RoomImplCopyWithImpl<$Res>
     Object? name = null,
     Object? createdAt = null,
     Object? deleted = null,
-    Object? lastTimelineId = freezed,
-    Object? lastTimeline = freezed,
+    Object? lastTimelineId = null,
+    Object? lastTimeline = null,
   }) {
     return _then(_$RoomImpl(
       id: null == id
@@ -173,14 +169,14 @@ class __$$RoomImplCopyWithImpl<$Res>
           ? _value.deleted
           : deleted // ignore: cast_nullable_to_non_nullable
               as bool,
-      lastTimelineId: freezed == lastTimelineId
+      lastTimelineId: null == lastTimelineId
           ? _value.lastTimelineId
           : lastTimelineId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      lastTimeline: freezed == lastTimeline
+              as String,
+      lastTimeline: null == lastTimeline
           ? _value.lastTimeline
           : lastTimeline // ignore: cast_nullable_to_non_nullable
-              as Timeline?,
+              as Timeline,
     ));
   }
 }
@@ -193,8 +189,8 @@ class _$RoomImpl implements _Room {
       required this.name,
       required this.createdAt,
       required this.deleted,
-      this.lastTimelineId,
-      this.lastTimeline});
+      required this.lastTimelineId,
+      required this.lastTimeline});
 
   factory _$RoomImpl.fromJson(Map<String, dynamic> json) =>
       _$$RoomImplFromJson(json);
@@ -212,10 +208,10 @@ class _$RoomImpl implements _Room {
   final bool deleted;
 // 삭제 여부
   @override
-  final String? lastTimelineId;
+  final String lastTimelineId;
 // 최신 Timeline의 ID (nullable)
   @override
-  final Timeline? lastTimeline;
+  final Timeline lastTimeline;
 
   @override
   String toString() {
@@ -265,8 +261,8 @@ abstract class _Room implements Room {
       required final String name,
       required final DateTime createdAt,
       required final bool deleted,
-      final String? lastTimelineId,
-      final Timeline? lastTimeline}) = _$RoomImpl;
+      required final String lastTimelineId,
+      required final Timeline lastTimeline}) = _$RoomImpl;
 
   factory _Room.fromJson(Map<String, dynamic> json) = _$RoomImpl.fromJson;
 
@@ -279,9 +275,9 @@ abstract class _Room implements Room {
   @override
   bool get deleted; // 삭제 여부
   @override
-  String? get lastTimelineId; // 최신 Timeline의 ID (nullable)
+  String get lastTimelineId; // 최신 Timeline의 ID (nullable)
   @override
-  Timeline? get lastTimeline;
+  Timeline get lastTimeline;
 
   /// Create a copy of Room
   /// with the given fields replaced by the non-null parameter values.
