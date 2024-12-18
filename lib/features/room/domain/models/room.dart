@@ -11,8 +11,8 @@ class Room with _$Room {
     required String name, // Room 이름
     required DateTime createdAt, // 생성 날짜 및 시간
     required bool deleted, // 삭제 여부
-    String? lastTimelineId, // 최신 Timeline의 ID (nullable)
-    Timeline? lastTimeline, // 최신 Timeline (nullable)
+    required String lastTimelineId, // 최신 Timeline의 ID (nullable)
+    required Timeline lastTimeline, // 최신 Timeline (nullable)
   }) = _Room;
 
   factory Room.fromJson(Map<String, dynamic> json) => _$RoomFromJson(json);

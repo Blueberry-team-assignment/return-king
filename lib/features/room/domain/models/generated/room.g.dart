@@ -11,10 +11,9 @@ _$RoomImpl _$$RoomImplFromJson(Map<String, dynamic> json) => _$RoomImpl(
       name: json['name'] as String,
       createdAt: DateTime.parse(json['createdAt'] as String),
       deleted: json['deleted'] as bool,
-      lastTimelineId: json['lastTimelineId'] as String?,
-      lastTimeline: json['lastTimeline'] == null
-          ? null
-          : Timeline.fromJson(json['lastTimeline'] as Map<String, dynamic>),
+      lastTimelineId: json['lastTimelineId'] as String,
+      lastTimeline:
+          Timeline.fromJson(json['lastTimeline'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$RoomImplToJson(_$RoomImpl instance) =>

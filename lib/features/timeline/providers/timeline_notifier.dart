@@ -18,10 +18,9 @@ class TimelineNotifier extends StateNotifier<List<Timeline>> {
             id: 'timeline${(roomIndex - 1) * 5 + timelineIndex}',
             roomId: 'room$roomIndex',
             senderType: random.nextBool() ? 'sender' : 'receiver',
-            content:
-                '샘플 데이터 룸: $roomIndex - 타임라인 $timelineIndex',
-            createdAt: DateTime.now()
-                .subtract(Duration(days: random.nextInt(30))),
+            content: '샘플 데이터 룸: $roomIndex - 타임라인 $timelineIndex',
+            createdAt:
+                DateTime.now().subtract(Duration(days: random.nextInt(30))),
             deleted: false,
           ),
         );
