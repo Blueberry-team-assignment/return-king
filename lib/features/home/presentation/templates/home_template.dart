@@ -17,13 +17,12 @@ class HomeTemplate extends ConsumerWidget {
       appBar: AppBar(title: const Text('답례왕')),
       floatingActionButton: ElevatedButton(
           onPressed: () => {
-            if (hasRooms) {
-              ref.read(roomListProvider.notifier).clearRooms()
-            } else {
-              ref.read(roomListProvider.notifier).fetchRooms()
-            }
-            // ref.read(hasRoomsProvider.notifier).state = !hasRooms
-          },
+                if (hasRooms)
+                  {ref.read(roomListProvider.notifier).clearRooms()}
+                else
+                  {ref.read(roomListProvider.notifier).fetchRooms()}
+                // ref.read(hasRoomsProvider.notifier).state = !hasRooms
+              },
           child: Text('hasRooms : ${!hasRooms}')),
       body: IndexedStack(
         index: currentTabIndex,
