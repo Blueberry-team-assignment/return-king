@@ -4,6 +4,8 @@ import 'package:return_king/features/room/domain/models/room.dart';
 import 'package:return_king/features/room/presentation/atoms/avatar.dart';
 import 'package:return_king/features/room/presentation/pages/room_detail_page.dart';
 import 'package:return_king/features/room/providers/room_providers.dart';
+import 'package:return_king/features/timeline/domain/models/timeline.dart';
+import 'package:return_king/features/timeline/providers/timeline_providers.dart';
 
 class RoomCard extends ConsumerWidget {
   const RoomCard({
@@ -20,6 +22,10 @@ class RoomCard extends ConsumerWidget {
         // 선택된 룸을 riverpod 상태에 설정
         ref.read(selectedRoomProvider.notifier).state = room;
 
+        // 선택된 룸과 이어지는 타임라인을 riverpod 상태에 설정
+        List<Timeline> timelineList = ref.watch(timelineListProvider) ?? [];
+        ref.read(selectedTimelineListByRoomIdProvider.notifier).state = timelineList.where((x) => x.roomId == room.id).toList();
+
         // 상세 페이지로 이동
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => const RoomDetailPage()));
@@ -34,23 +40,34 @@ class RoomCard extends ConsumerWidget {
         ),
         child: Column(
           children: [
-            Row(
-              children: [
-                const Avatar(),
-                Column(
-                  children: [
-                    Text(
-                      room.name,
-                    ),
-                    Text(
-                      room.lastTimeline.content,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                    ),
-                  ],
-                )
-              ],
-            )
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+              child: Row(
+                children: [
+                  const Avatar(),
+                  const SizedBox(width: 12),
+                  Column(
+                    children: [
+                      Text(
+                        room.lastTimeline.createdAt.toString(),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                      Text(
+                        room.name,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                      Text(
+                        room.lastTimeline.content,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                      ),
+                    ],
+                  )
+                ],
+              )
+          )
           ],
         ),
       ),

@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:return_king/features/timeline/domain/models/timeline.dart';
 
-class TimelineNotifier extends StateNotifier<List<Timeline>> {
-  TimelineNotifier() : super([]) {
+class TimelineListNotifier extends StateNotifier<List<Timeline>> {
+  TimelineListNotifier() : super([]) {
     fetchTimelines();
   }
 
