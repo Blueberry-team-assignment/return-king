@@ -1,16 +1,16 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:return_king/features/room/domain/models/room.dart';
 import 'package:return_king/features/timeline/domain/models/timeline.dart';
-import 'package:return_king/features/timeline/providers/timeline_notifier.dart';
+import 'package:return_king/features/timeline/providers/timeline_list_notifier.dart';
 
 class RoomListNotifier extends StateNotifier<List<Room>> {
-  RoomListNotifier(this.timelineNotifier) : super([]) {
+  RoomListNotifier(this.timelineListNotifier) : super([]) {
     fetchRooms();
   }
-  final TimelineNotifier timelineNotifier;
+  final TimelineListNotifier timelineListNotifier;
 
   Future<void> fetchRooms() async {
-    List<Timeline> timelines = await timelineNotifier.getTimeLine();
+    List<Timeline> timelines = await timelineListNotifier.getTimeLine();
     timelines.sort((a, b) => a.createdAt.millisecondsSinceEpoch
         .compareTo(b.createdAt.millisecondsSinceEpoch));
     List<Room> rooms = List.generate(30, (index) {
