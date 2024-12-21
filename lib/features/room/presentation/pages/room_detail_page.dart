@@ -12,10 +12,8 @@ class RoomDetailPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final Room room = ref.watch(selectedRoomProvider)!;
-    final List<Timeline> timelineList = ref.watch(selectedTimelineListByRoomIdProvider) ?? [];
-    return RoomDetailTemplate(
-      room: room,
-      timelineList: timelineList
-    );
+    final List<Timeline> timelineList =
+        ref.watch(selectedTimelineListByRoomIdProvider) ?? [];
+    return RoomDetailTemplate(room: room, timelineList: timelineList);
   }
 }

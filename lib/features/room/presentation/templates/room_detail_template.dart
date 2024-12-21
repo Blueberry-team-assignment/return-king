@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:return_king/features/room/domain/enums/sender_type.dart';
 import 'package:return_king/features/room/domain/models/room.dart';
+import 'package:return_king/features/room/presentation/atoms/avatar.dart';
 import 'package:return_king/features/timeline/domain/models/timeline.dart';
 
 class RoomDetailTemplate extends ConsumerWidget {
@@ -25,23 +27,54 @@ class RoomDetailTemplate extends ConsumerWidget {
         itemCount: timelineList.length,
         itemBuilder: (context, index) {
           final item = timelineList[index];
+          final isRightAlign = SenderType.receiver == item.senderType;
+          final mainAlign = isRightAlign
+              ? MainAxisAlignment.end
+              : MainAxisAlignment.start;
+          final crossAlign = isRightAlign
+              ? CrossAxisAlignment.end
+              : CrossAxisAlignment.start;
+          final List<Widget> timelineRow = [
+            const Avatar(),
+            const SizedBox(width: 10),
+            Column(
+              crossAxisAlignment: crossAlign,
+              children: [
+                Text(room.name),
+                Column(
+                  crossAxisAlignment: crossAlign,
+                  children: [
+                    Text(item.roomId),
+                    Text(item.content),
+                    Text(item.createdAt.toIso8601String()),
+                  ],
+                )
+              ],
+            )
+          ];
           return Dismissible(
             key: Key(item.id),
             background: Container(color: Colors.green),
             secondaryBackground: Container(
               color: Colors.red,
-              child: const Expanded(
-                child: 
-                Text('받은 선물!')
-              ),
+              child: const Expanded(child: Text('받은 선물!')),
             ),
             onDismissed: (direction) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text('${item.id}를 삭제 했습니다.')),
               );
             },
-            child: ListTile(
-              title: Text(item.content),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 6),
+              child: Row(
+              mainAxisAlignment: mainAlign,
+              children: [
+                if (SenderType.receiver == item.senderType)
+                  ...[...timelineRow].reversed
+                else
+                  ...timelineRow
+              ],
+            ),
             ),
           );
         },
@@ -55,16 +88,12 @@ class RoomDetailTemplate extends ConsumerWidget {
                 Expanded(
                     child: TextField(
                   controller: messageController,
-                  decoration:
-                      const InputDecoration(
-                        hintText: '입력해봐 ㅎㅎ', 
-                        border: InputBorder.none
-                      ),
+                  decoration: const InputDecoration(
+                      hintText: '입력해봐 ㅎㅎ', border: InputBorder.none),
                 )),
                 IconButton(
                   icon: const Icon(Icons.send),
-                  onPressed: () {
-                  },
+                  onPressed: () {},
                 )
               ],
             ),

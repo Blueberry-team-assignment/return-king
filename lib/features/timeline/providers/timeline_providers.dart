@@ -4,7 +4,9 @@ import 'package:return_king/features/timeline/providers/timeline_list_notifier.d
 
 final hasRoomsProvider = StateProvider<bool>((ref) => false);
 
-final timelineListProvider = StateNotifierProvider<TimelineListNotifier, List<Timeline>>(
-    (ref) => TimelineListNotifier());
+final timelineListProvider =
+    StateNotifierProvider<TimelineListNotifier, List<Timeline>>(
+        (ref) => TimelineListNotifier());
 
-final selectedTimelineListByRoomIdProvider = StateProvider<List<Timeline>?>((ref) => []);
+final selectedTimelineListByRoomIdProvider =
+    StateProvider<List<Timeline>?>((ref) => []);
