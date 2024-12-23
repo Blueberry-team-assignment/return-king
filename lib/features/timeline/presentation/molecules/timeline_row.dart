@@ -6,9 +6,9 @@ import 'package:return_king/features/timeline/domain/models/timeline.dart';
 import 'package:return_king/shared/utils.dart';
 
 class TimelineRow extends StatelessWidget {
-  const TimelineRow({super.key, required this.room, required this.timeline});
+  const TimelineRow({super.key, this.room, required this.timeline});
 
-  final Room room;
+  final Room? room;
   final Timeline timeline;
 
   @override
@@ -19,7 +19,7 @@ class TimelineRow extends StatelessWidget {
       Column(
         crossAxisAlignment: getCrossAlign(timeline),
         children: [
-          Text(room.name),
+          room != null ? Text(room!.name) : const SizedBox(),
           Column(
             crossAxisAlignment: getCrossAlign(timeline),
             children: [

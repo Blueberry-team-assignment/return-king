@@ -4,9 +4,9 @@ import 'package:return_king/features/timeline/domain/models/timeline.dart';
 import 'package:return_king/features/timeline/presentation/molecules/timeline_row.dart';
 
 class SlideListItem extends StatelessWidget {
-  const SlideListItem({super.key, required this.room, required this.timeline});
+  const SlideListItem({super.key, this.room, required this.timeline});
 
-  final Room room;
+  final Room? room;
   final Timeline timeline;
 
   @override
