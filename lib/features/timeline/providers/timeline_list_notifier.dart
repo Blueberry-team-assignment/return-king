@@ -1,10 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:return_king/features/room/domain/enums/sender_type.dart';
 import 'package:return_king/features/timeline/domain/models/timeline.dart';
 
-class TimelineNotifier extends StateNotifier<List<Timeline>> {
-  TimelineNotifier() : super([]) {
+class TimelineListNotifier extends StateNotifier<List<Timeline>> {
+  TimelineListNotifier() : super([]) {
     fetchTimelines();
   }
 
@@ -17,7 +18,7 @@ class TimelineNotifier extends StateNotifier<List<Timeline>> {
           Timeline(
             id: 'timeline${(roomIndex - 1) * 5 + timelineIndex}',
             roomId: 'room$roomIndex',
-            senderType: random.nextBool() ? 'sender' : 'receiver',
+            senderType: random.nextBool() ? SenderType.sender : SenderType.receiver,
             content: '샘플 데이터 룸: $roomIndex - 타임라인 $timelineIndex',
             createdAt:
                 DateTime.now().subtract(Duration(days: random.nextInt(30))),
