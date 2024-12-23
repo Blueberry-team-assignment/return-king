@@ -21,7 +21,6 @@ class HomeTemplate extends ConsumerWidget {
                   {ref.read(roomListProvider.notifier).clearRooms()}
                 else
                   {ref.read(roomListProvider.notifier).fetchRooms()}
-                // ref.read(hasRoomsProvider.notifier).state = !hasRooms
               },
           child: Text('hasRooms : ${!hasRooms}')),
       body: IndexedStack(

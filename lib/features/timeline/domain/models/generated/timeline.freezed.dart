@@ -22,7 +22,7 @@ Timeline _$TimelineFromJson(Map<String, dynamic> json) {
 mixin _$Timeline {
   String get id => throw _privateConstructorUsedError; // Timeline 고유 ID
   String get roomId => throw _privateConstructorUsedError; // 연결된 Room의 ID
-  String get senderType =>
+  SenderType get senderType =>
       throw _privateConstructorUsedError; // 발신자 타입 (예: "user", "system")
   String get content => throw _privateConstructorUsedError; // 메시지 내용
   DateTime get createdAt => throw _privateConstructorUsedError; // 생성 날짜 및 시간
@@ -46,7 +46,7 @@ abstract class $TimelineCopyWith<$Res> {
   $Res call(
       {String id,
       String roomId,
-      String senderType,
+      SenderType senderType,
       String content,
       DateTime createdAt,
       bool deleted});
@@ -86,7 +86,7 @@ class _$TimelineCopyWithImpl<$Res, $Val extends Timeline>
       senderType: null == senderType
           ? _value.senderType
           : senderType // ignore: cast_nullable_to_non_nullable
-              as String,
+              as SenderType,
       content: null == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
@@ -114,7 +114,7 @@ abstract class _$$TimelineImplCopyWith<$Res>
   $Res call(
       {String id,
       String roomId,
-      String senderType,
+      SenderType senderType,
       String content,
       DateTime createdAt,
       bool deleted});
@@ -152,7 +152,7 @@ class __$$TimelineImplCopyWithImpl<$Res>
       senderType: null == senderType
           ? _value.senderType
           : senderType // ignore: cast_nullable_to_non_nullable
-              as String,
+              as SenderType,
       content: null == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
@@ -190,7 +190,7 @@ class _$TimelineImpl implements _Timeline {
   final String roomId;
 // 연결된 Room의 ID
   @override
-  final String senderType;
+  final SenderType senderType;
 // 발신자 타입 (예: "user", "system")
   @override
   final String content;
@@ -246,7 +246,7 @@ abstract class _Timeline implements Timeline {
   const factory _Timeline(
       {required final String id,
       required final String roomId,
-      required final String senderType,
+      required final SenderType senderType,
       required final String content,
       required final DateTime createdAt,
       required final bool deleted}) = _$TimelineImpl;
@@ -259,7 +259,7 @@ abstract class _Timeline implements Timeline {
   @override
   String get roomId; // 연결된 Room의 ID
   @override
-  String get senderType; // 발신자 타입 (예: "user", "system")
+  SenderType get senderType; // 발신자 타입 (예: "user", "system")
   @override
   String get content; // 메시지 내용
   @override

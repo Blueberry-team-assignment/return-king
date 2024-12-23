@@ -6,6 +6,8 @@ class Avatar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const Text('avatar');
+    return const CircleAvatar(
+      backgroundColor: Colors.indigo,
+    );
   }
 }
