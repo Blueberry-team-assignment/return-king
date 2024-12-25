@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:return_king/features/timeline/domain/models/timeline.dart';
-import 'package:return_king/features/timeline/providers/timeline_list_notifier.dart';
+import 'package:return_king/shared/providers/timeline_list_notifier.dart';
 
 final hasRoomsProvider = StateProvider<bool>((ref) => false);
 
