@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:return_king/features/room/domain/models/room.dart';
 import 'package:return_king/features/room/presentation/atoms/buttons/basic_button.dart';
 import 'package:return_king/features/room/presentation/molecules/room_card.dart';
-import 'package:return_king/features/room/providers/room_providers.dart';
+import 'package:return_king/shared/providers/room_providers.dart';
 
 class RoomList extends ConsumerWidget {
   const RoomList({super.key, required this.roomList});
