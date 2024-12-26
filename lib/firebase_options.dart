@@ -57,6 +57,8 @@ class DefaultFirebaseOptions {
     appId: '1:646451642105:android:73d66e760e7a5dedc16c28',
     messagingSenderId: '646451642105',
     projectId: 'return-king',
+    databaseURL: 'https://return-king-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'return-king.firebasestorage.app',
   );
+
 }
