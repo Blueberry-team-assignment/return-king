@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:return_king/features/home/presentation/pages/home_page.dart';
+import 'package:return_king/features/login/presentation/organisms/auth_gate.dart';
 import 'package:return_king/firebase_options.dart';
 
 Future<void> main() async {
@@ -17,6 +18,11 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const MaterialApp(home: HomePage());
+    return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.blue
+      ),
+      home: const AuthGate()
+    );
   }
 }
