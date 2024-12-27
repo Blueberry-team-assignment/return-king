@@ -22,7 +22,20 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.24.4'
-
+      
+        # 파이어베이스 설정파일 생성
+      - name: Create firebase_options.dart
+        run: |
+          echo "import 'package:firebase_core/firebase_core.dart';" > lib/firebase_options.dart
+          echo "const DefaultFirebaseOptions = FirebaseOptions(" >> lib/firebase_options.dart
+          echo "  apiKey: '${{ secrets.FIREBASE_API_KEY }}'," >> lib/firebase_options.dart
+          echo "  authDomain: '${{ secrets.FIREBASE_AUTH_DOMAIN }}'," >> lib/firebase_options.dart
+          echo "  projectId: '${{ secrets.FIREBASE_PROJECT_ID }}'," >> lib/firebase_options.dart
+          echo "  storageBucket: '${{ secrets.FIREBASE_STORAGE_BUCKET }}'," >> lib/firebase_options.dart
+          echo "  messagingSenderId: '${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}'," >> lib/firebase_options.dart
+          echo "  appId: '${{ secrets.FIREBASE_APP_ID }}'," >> lib/firebase_options.dart
+          echo ");" >> lib/firebase_options.dart
+  
       # 라이브러리 설치
       - name: Install dependencies
         run: dart pub get
