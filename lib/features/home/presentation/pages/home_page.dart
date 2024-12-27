@@ -1,3 +1,4 @@
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:return_king/features/home/presentation/molecules/room_list_tab.dart';
@@ -14,7 +15,12 @@ class HomePage extends ConsumerWidget {
     final rooms = ref.watch(roomListProvider);
     final hasRooms = rooms.isNotEmpty;
     return Scaffold(
-      appBar: AppBar(title: const Text('답례왕')),
+      appBar: AppBar(
+        title: const Text('답례왕'),
+        actions: const [
+          SignOutButton()
+        ],
+      ),
       floatingActionButton: ElevatedButton(
           onPressed: () => {
                 if (hasRooms)

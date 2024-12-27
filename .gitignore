@@ -51,3 +51,4 @@ macos/Runner/GoogleService-Info.plist
 macos/Runner.xcodeproj/project.pbxproj
 ios/Runner.xcodeproj/project.pbxproj
 macos/Runner.xcodeproj/project.pbxproj
+.env

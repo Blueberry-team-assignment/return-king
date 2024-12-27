@@ -42,6 +42,11 @@ jobs:
       - name: Install dependencies
         run: dart pub get
 
+      # dotenv파일 생성
+      - name: Set environment variables
+        run: echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .env
+
+
       # 프로젝트 소스 분석
       - name: Analyze project source
         run: dart analyze
