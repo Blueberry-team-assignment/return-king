@@ -6,7 +6,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:return_king/features/home/presentation/pages/home_page.dart';
 
-
 class AuthGate extends ConsumerWidget {
   const AuthGate({super.key});
 

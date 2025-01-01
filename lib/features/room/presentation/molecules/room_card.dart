@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:return_king/features/room/domain/models/room.dart';
 import 'package:return_king/features/room/presentation/pages/room_detail_page.dart';
-import 'package:return_king/shared/providers/room_providers.dart';
+import 'package:return_king/shared/providers/room/room_providers.dart';
 import 'package:return_king/features/timeline/domain/models/timeline.dart';
-import 'package:return_king/shared/providers/timeline_providers.dart';
+import 'package:return_king/shared/providers/timeline/timeline_providers.dart';
 import 'package:return_king/shared/presentation/atoms/avatar.dart';
 
 class RoomCard extends ConsumerWidget {
@@ -51,7 +51,7 @@ class RoomCard extends ConsumerWidget {
                     Column(
                       children: [
                         Text(
-                          room.lastTimeline.createdAt.toString(),
+                          room.lastTimeline?.createdAt.toString() ?? '',
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                         ),
@@ -61,7 +61,7 @@ class RoomCard extends ConsumerWidget {
                           maxLines: 1,
                         ),
                         Text(
-                          room.lastTimeline.content,
+                          room.lastTimeline?.content ?? '',
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
                         ),

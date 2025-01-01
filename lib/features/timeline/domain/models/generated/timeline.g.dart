@@ -8,8 +8,9 @@ part of '../timeline.dart';
 
 _$TimelineImpl _$$TimelineImplFromJson(Map<String, dynamic> json) =>
     _$TimelineImpl(
-      id: json['id'] as String,
+      id: json['id'] as String?,
       roomId: json['roomId'] as String,
+      userId: json['userId'] as String,
       senderType: $enumDecode(_$SenderTypeEnumMap, json['senderType']),
       content: json['content'] as String,
       createdAt: DateTime.parse(json['createdAt'] as String),
@@ -20,6 +21,7 @@ Map<String, dynamic> _$$TimelineImplToJson(_$TimelineImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'roomId': instance.roomId,
+      'userId': instance.userId,
       'senderType': _$SenderTypeEnumMap[instance.senderType]!,
       'content': instance.content,
       'createdAt': instance.createdAt.toIso8601String(),

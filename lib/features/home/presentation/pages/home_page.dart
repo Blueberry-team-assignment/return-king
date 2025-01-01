@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:return_king/features/home/presentation/molecules/room_list_tab.dart';
 import 'package:return_king/features/home/presentation/molecules/timeline_tab.dart';
-import 'package:return_king/shared/providers/home_providers.dart';
-import 'package:return_king/shared/providers/room_providers.dart';
+import 'package:return_king/shared/providers/home/home_providers.dart';
+import 'package:return_king/shared/providers/room/room_providers.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -17,9 +17,7 @@ class HomePage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('답례왕'),
-        actions: const [
-          SignOutButton()
-        ],
+        actions: const [SignOutButton()],
       ),
       floatingActionButton: ElevatedButton(
           onPressed: () => {

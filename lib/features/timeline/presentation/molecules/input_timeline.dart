@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class InputTimeline extends StatelessWidget {
-  const InputTimeline({
-    super.key,
-    required this.controller
-  });
+  const InputTimeline(
+      {super.key, required this.controller, required this.onPressed});
 
   final TextEditingController controller;
+
+  final void Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class InputTimeline extends StatelessWidget {
               )),
               IconButton(
                 icon: const Icon(Icons.send),
-                onPressed: () {},
+                onPressed: onPressed,
               )
             ],
           ),

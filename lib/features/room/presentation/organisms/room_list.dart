@@ -3,7 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:return_king/features/room/domain/models/room.dart';
 import 'package:return_king/features/room/presentation/atoms/buttons/basic_button.dart';
 import 'package:return_king/features/room/presentation/molecules/room_card.dart';
-import 'package:return_king/shared/providers/room_providers.dart';
+import 'package:return_king/features/room/presentation/pages/room_detail_page.dart';
+import 'package:return_king/shared/providers/room/room_providers.dart';
 
 class RoomList extends ConsumerWidget {
   const RoomList({super.key, required this.roomList});
@@ -17,23 +18,33 @@ class RoomList extends ConsumerWidget {
         ? Center(
             child: BasicButton(
                 childText: Text('작성', selectionColor: Colors.indigo[500]),
-                onPressed: () => {}),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              const RoomDetailPage(isNewRoom: true)));
+                }),
           )
         : ListView.builder(
             itemCount: roomList.length,
             itemBuilder: (context, index) {
-              final item = roomList[index];
-              return Dismissible(
-                key: Key(item.id),
-                background: Container(color: Colors.green),
-                secondaryBackground: Container(color: Colors.red),
-                onDismissed: (direction) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('${item.id}를 삭제 했습니다.')),
-                  );
-                },
-                child: RoomCard(room: item),
-              );
+              final Room item = roomList[index];
+              if (item.id == null) {
+                return const SizedBox();
+              } else {
+                return Dismissible(
+                  key: Key(item.id!),
+                  background: Container(color: Colors.green),
+                  secondaryBackground: Container(color: Colors.red),
+                  onDismissed: (direction) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('${item.id}를 삭제 했습니다.')),
+                    );
+                  },
+                  child: RoomCard(room: item),
+                );
+              }
             },
           );
   }

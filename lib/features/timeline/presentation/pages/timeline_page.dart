@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:return_king/features/timeline/domain/models/timeline.dart';
 import 'package:return_king/features/timeline/presentation/templates/timeline_template.dart';
-import 'package:return_king/shared/providers/timeline_providers.dart';
+import 'package:return_king/shared/providers/timeline/timeline_providers.dart';
 
 class TimelinePage extends ConsumerWidget {
   const TimelinePage({super.key});
