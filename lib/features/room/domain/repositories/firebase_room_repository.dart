@@ -14,8 +14,8 @@ class FirebaseRoomRepository implements IRoomRepository {
   Future<Result<List<Room>>> getAllRoomList() async {
     try {
       final querySnapshot = await _firestore
-          .collection(Constants.ROOMS)
-          .where(Constants.USER_ID,
+          .collection(Constants.rooms)
+          .where(Constants.userId,
               isEqualTo: FirebaseAuth.instance.currentUser?.uid)
           .get();
       final data =
@@ -30,8 +30,8 @@ class FirebaseRoomRepository implements IRoomRepository {
   Future<Result<List<Room>>> getRoomByRoomId(String roomId) async {
     try {
       final querySnapshot = await _firestore
-          .collection(Constants.ROOMS)
-          .where(Constants.USER_ID,
+          .collection(Constants.rooms)
+          .where(Constants.userId,
               isEqualTo: FirebaseAuth.instance.currentUser?.uid)
           .get();
       final data =
@@ -45,7 +45,7 @@ class FirebaseRoomRepository implements IRoomRepository {
   @override
   Future<Result<Room>> saveRoom(Room room) async {
     try {
-      var id = _firestore.collection(Constants.ROOMS).doc().id;
+      var id = _firestore.collection(Constants.rooms).doc().id;
       var data = room
           .copyWith(
             id: id,
@@ -54,7 +54,7 @@ class FirebaseRoomRepository implements IRoomRepository {
             lastTimelineId: null,
           )
           .toJson();
-      await _firestore.collection(Constants.ROOMS).add(data);
+      await _firestore.collection(Constants.rooms).add(data);
       return Result.ok(Room.fromJson(data));
     } on Exception catch (e) {
       return Result.error(e);
@@ -66,7 +66,7 @@ class FirebaseRoomRepository implements IRoomRepository {
       String roomId, String timelineId) async {
     try {
       await _firestore
-          .collection(Constants.ROOMS)
+          .collection(Constants.rooms)
           .doc(roomId)
           .update({"lastTimelineId": timelineId});
       return Result.ok(true);

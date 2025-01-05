@@ -1,5 +1,5 @@
 class Constants {
-  static const String ROOMS = 'rooms';
-  static const String TIMELINES = 'timelines';
-  static const String USER_ID = 'userId';
+  static const String rooms = 'rooms';
+  static const String timelines = 'timelines';
+  static const String userId = 'userId';
 }

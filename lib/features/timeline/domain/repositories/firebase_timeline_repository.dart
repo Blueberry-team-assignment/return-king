@@ -14,8 +14,8 @@ class FirebaseTimelineRepository implements ITimelineRepository {
   Future<Result<List<Timeline>>> getAllTimelines() async {
     try {
       final querySnapshot = await _firestore
-          .collection(Constants.TIMELINES)
-          .where(Constants.USER_ID,
+          .collection(Constants.timelines)
+          .where(Constants.userId,
               isEqualTo: FirebaseAuth.instance.currentUser?.uid)
           .get();
       final result = querySnapshot.docs
@@ -30,14 +30,14 @@ class FirebaseTimelineRepository implements ITimelineRepository {
   @override
   Future<Result<Timeline>> saveTimeline(Timeline timeline) async {
     try {
-      var id = _firestore.collection(Constants.TIMELINES).doc().id;
+      var id = _firestore.collection(Constants.timelines).doc().id;
       var data = timeline
           .copyWith(
             id: id, userId: FirebaseAuth.instance.currentUser?.uid ?? '',
             deleted: false
           )
           .toJson();
-      await _firestore.collection(Constants.TIMELINES).add(data);
+      await _firestore.collection(Constants.timelines).add(data);
       return Result.ok(Timeline.fromJson(data));
     } on Exception catch (e) {
       return Result.error(e);
@@ -48,8 +48,8 @@ class FirebaseTimelineRepository implements ITimelineRepository {
   Future<Result<List<Timeline>>> getTimelinesByRoomId(String roomId) async {
     try {
       final querySnapshot = await _firestore
-          .collection(Constants.TIMELINES)
-          .where(Constants.USER_ID,
+          .collection(Constants.timelines)
+          .where(Constants.userId,
               isEqualTo: FirebaseAuth.instance.currentUser?.uid)
           .get();
       final result = querySnapshot.docs
