@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:return_king/features/room/domain/models/room.dart';
 import 'package:return_king/features/room/domain/usecases/add_room/add_room_command.dart';
@@ -16,7 +17,8 @@ class RoomNotifier extends StateNotifier<Room?> {
   // String roomId;
 
   Future<Result<Room>> fetchRoom(String roomId) async {
-   FetchRoomByIdResponse  res = await fetchRoomByIdUsecase.execute(FetchRoomByIdQuery(roomId));
+    FetchRoomByIdResponse res =
+        await fetchRoomByIdUsecase.execute(FetchRoomByIdQuery(roomId));
     state = res.room;
     return Result.ok(state!);
   }
@@ -38,6 +40,10 @@ class RoomNotifier extends StateNotifier<Room?> {
   }
 
   void clearSelectedRoom() {
-    state = null;
+    if (state != null) {
+      state = null;
+    } else {
+      debugPrint('selected room is already null');
+    }
   }
 }

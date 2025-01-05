@@ -1,7 +1,7 @@
 import 'package:return_king/features/timeline/domain/models/timeline.dart';
 import 'package:return_king/features/timeline/domain/repositories/i_timeline_repository.dart';
 import 'package:return_king/features/timeline/domain/usecases/add_timeline/add_timeline_command.dart';
-import 'package:return_king/features/timeline/domain/usecases/add_timeline/add_timeline_result.dart';
+import 'package:return_king/features/timeline/domain/usecases/add_timeline/add_timeline_response.dart';
 import 'package:return_king/shared/usecases/usecase.dart';
 
 class AddTimelineUsecase

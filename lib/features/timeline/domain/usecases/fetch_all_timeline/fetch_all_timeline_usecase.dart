@@ -1,6 +1,6 @@
 import 'package:return_king/features/timeline/domain/repositories/i_timeline_repository.dart';
 import 'package:return_king/features/timeline/domain/usecases/fetch_all_timeline/fetch_all_timeline_query.dart';
-import 'package:return_king/features/timeline/domain/usecases/fetch_all_timeline/fetch_all_timeline_result.dart';
+import 'package:return_king/features/timeline/domain/usecases/fetch_all_timeline/fetch_all_timeline_response.dart';
 import 'package:return_king/shared/usecases/usecase.dart';
 
 class FetchAllTimelineUsecase

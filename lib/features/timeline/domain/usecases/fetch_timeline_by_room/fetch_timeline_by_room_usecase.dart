@@ -1,6 +1,6 @@
 import 'package:return_king/features/timeline/domain/repositories/i_timeline_repository.dart';
 import 'package:return_king/features/timeline/domain/usecases/fetch_timeline_by_room/fetch_timeline_by_room_query.dart';
-import 'package:return_king/features/timeline/domain/usecases/fetch_timeline_by_room/fetch_timeline_by_room_result.dart';
+import 'package:return_king/features/timeline/domain/usecases/fetch_timeline_by_room/fetch_timeline_by_room_response.dart';
 import 'package:return_king/shared/usecases/usecase.dart';
 
 class FetchTimelineByRoomUsecase

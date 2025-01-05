@@ -51,6 +51,8 @@ class FirebaseTimelineRepository implements ITimelineRepository {
           .collection(Constants.timelines)
           .where(Constants.userId,
               isEqualTo: FirebaseAuth.instance.currentUser?.uid)
+          .where(Constants.roomId,
+              isEqualTo: roomId)
           .get();
       final result = querySnapshot.docs
           .map((doc) => Timeline.fromJson(doc.data()))

@@ -2,10 +2,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:return_king/features/room/domain/enums/sender_type.dart';
 import 'package:return_king/features/timeline/domain/models/timeline.dart';
 import 'package:return_king/features/timeline/domain/usecases/add_timeline/add_timeline_command.dart';
-import 'package:return_king/features/timeline/domain/usecases/add_timeline/add_timeline_result.dart';
+import 'package:return_king/features/timeline/domain/usecases/add_timeline/add_timeline_response.dart';
 import 'package:return_king/features/timeline/domain/usecases/add_timeline/add_timeline_usecase.dart';
 import 'package:return_king/features/timeline/domain/usecases/fetch_all_timeline/fetch_all_timeline_query.dart';
-import 'package:return_king/features/timeline/domain/usecases/fetch_all_timeline/fetch_all_timeline_result.dart';
+import 'package:return_king/features/timeline/domain/usecases/fetch_all_timeline/fetch_all_timeline_response.dart';
 import 'package:return_king/features/timeline/domain/usecases/fetch_all_timeline/fetch_all_timeline_usecase.dart';
 import 'package:return_king/shared/result.dart';
 
