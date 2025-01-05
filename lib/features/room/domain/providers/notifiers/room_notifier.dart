@@ -18,6 +18,8 @@ class RoomNotifier extends StateNotifier<Room?> {
     return state!;
   }
 
+  /// TODO
+  /// add room은 room에서? 혹은 roomList에서?
   Future<Result<Room>> addRoom(
       {required String title, required DateTime createdAt}) async {
     AddRoomResponse res = await addRoomUsecase
