@@ -6,16 +6,19 @@ import 'package:return_king/features/room/domain/repositories/firebase_room_repo
 import 'package:return_king/features/room/domain/repositories/i_room_repository.dart';
 import 'package:return_king/features/room/domain/usecases/add_room/add_room_usecase.dart';
 import 'package:return_king/features/room/domain/usecases/fetch_all_room/fetch_all_room_usecase.dart';
+import 'package:return_king/features/timeline/domain/providers/timeline_providers.dart';
 import 'package:return_king/shared/providers/providers.dart';
 
 /// 상태관리 관련 Start
 /// room list에 대한 상태관리용
 final roomListProvider = StateNotifierProvider<RoomListNotifier, List<Room>>(
-    (ref) => RoomListNotifier());
+    (ref) => RoomListNotifier(ref.read(fetchAllRoomUsecaseProvider)));
 
 /// 선택된 room에 대한 상태관리용
 final selectedRoomProvider = StateNotifierProvider<RoomNotifier, Room?>((ref) {
-  return RoomNotifier(ref.read(addRoomUsecaseProvider));
+  return RoomNotifier(
+    ref.read(addRoomUsecaseProvider)
+  );
 });
 
 /// 상태관리 관련 End
@@ -32,7 +35,11 @@ final addRoomUsecaseProvider = Provider<AddRoomUsecase>((ref) {
 });
 
 // DI: room취득 상세로직
-final fetchRoomUsecaseProvider = Provider<FetchAllRoomUsecase>((ref) {
-  return FetchAllRoomUsecase(ref.read(roomRepositoryProvider));
+final fetchAllRoomUsecaseProvider = Provider<FetchAllRoomUsecase>((ref) {
+  return FetchAllRoomUsecase(
+    ref.read(roomRepositoryProvider),
+    ref.read(timelineRepositoryProvider)
+  );
 });
+
 /// DI End

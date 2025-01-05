@@ -5,7 +5,7 @@ import 'package:return_king/features/timeline/domain/providers/notifiers/timelin
 import 'package:return_king/features/timeline/domain/repositories/firebase_timeline_repository.dart';
 import 'package:return_king/features/timeline/domain/repositories/i_timeline_repository.dart';
 import 'package:return_king/features/timeline/domain/usecases/add_timeline/add_timeline_usecase.dart';
-import 'package:return_king/features/timeline/domain/usecases/fetch_timeline/fetch_timeline_usecase.dart';
+import 'package:return_king/features/timeline/domain/usecases/fetch_all_timeline/fetch_all_timeline_usecase.dart';
 import 'package:return_king/features/timeline/domain/usecases/fetch_timeline_by_room/fetch_timeline_by_room_usecase.dart';
 import 'package:return_king/shared/providers/providers.dart';
 
@@ -34,8 +34,8 @@ final addTimelineUsecaseProvider = Provider<AddTimelineUsecase>((ref) {
 });
 
 // DI: 유저 별 모든 timeline 리스트 취득 로직
-final fetchAllTimelineUsecaseProvider = Provider<FetchTimelineUsecase>((ref) {
-  return FetchTimelineUsecase(ref.read(timelineRepositoryProvider));
+final fetchAllTimelineUsecaseProvider = Provider<FetchAllTimelineUsecase>((ref) {
+  return FetchAllTimelineUsecase(ref.read(timelineRepositoryProvider));
 });
 
 // DI: room 별 timeline 리스트 취득 로직

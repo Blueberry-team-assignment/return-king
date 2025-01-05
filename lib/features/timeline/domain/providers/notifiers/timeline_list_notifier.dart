@@ -4,22 +4,22 @@ import 'package:return_king/features/timeline/domain/models/timeline.dart';
 import 'package:return_king/features/timeline/domain/usecases/add_timeline/add_timeline_command.dart';
 import 'package:return_king/features/timeline/domain/usecases/add_timeline/add_timeline_result.dart';
 import 'package:return_king/features/timeline/domain/usecases/add_timeline/add_timeline_usecase.dart';
-import 'package:return_king/features/timeline/domain/usecases/fetch_timeline/fetch_timeline_query.dart';
-import 'package:return_king/features/timeline/domain/usecases/fetch_timeline/fetch_timeline_result.dart';
-import 'package:return_king/features/timeline/domain/usecases/fetch_timeline/fetch_timeline_usecase.dart';
+import 'package:return_king/features/timeline/domain/usecases/fetch_all_timeline/fetch_all_timeline_query.dart';
+import 'package:return_king/features/timeline/domain/usecases/fetch_all_timeline/fetch_all_timeline_result.dart';
+import 'package:return_king/features/timeline/domain/usecases/fetch_all_timeline/fetch_all_timeline_usecase.dart';
 import 'package:return_king/shared/result.dart';
 
 class TimelineListNotifier extends StateNotifier<List<Timeline>> {
-  TimelineListNotifier(this.addTimelineUsecase, this.fetchTimelineUsecase)
+  TimelineListNotifier(this.addTimelineUsecase, this.fetchAllTimelineUsecase)
       : super([]) {
     fetchAllTimeline();
   }
 
   final AddTimelineUsecase addTimelineUsecase;
-  final FetchTimelineUsecase fetchTimelineUsecase;
+  final FetchAllTimelineUsecase fetchAllTimelineUsecase;
 
   Future<void> fetchAllTimeline() async {
-    FetchTimelineResponse res = await fetchTimelineUsecase.execute(FetchTimelineQuery());
+    FetchAllTimelineResponse res = await fetchAllTimelineUsecase.execute(FetchAllTimelineQuery());
     state = res.timelines;
   }
 

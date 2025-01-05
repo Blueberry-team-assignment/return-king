@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:return_king/features/room/domain/models/room.dart';
+import 'package:return_king/features/room/domain/providers/room_providers.dart';
 import 'package:return_king/features/room/presentation/pages/room_detail_page.dart';
+import 'package:return_king/features/timeline/domain/providers/timeline_providers.dart';
 import 'package:return_king/shared/presentation/atoms/avatar.dart';
 
 class RoomCard extends ConsumerWidget {
@@ -19,18 +21,14 @@ class RoomCard extends ConsumerWidget {
 
         /// 상세 페이지로 이동하기 전에 데이터 취득 처리 실행
         // 선택된 룸과 이어지는 타임라인을 취득
-        /*
         ref.read(selectedRoomProvider.notifier)
           .getRoom();
         // room별 타임라인 취득
-        if (room != null && room.id != null) {
+        if (room.id != null) {
           ref
               .read(selectedTimelineListByRoomIdProvider.notifier)
               .getTimelineByRoomId(room.id!);
         }
-        */
-
-
         // 상세 페이지로 이동
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => const RoomDetailPage()));
