@@ -18,18 +18,20 @@ class RoomCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return InkWell(
       onTap: () async {
-
         /// 상세 페이지로 이동하기 전에 데이터 취득 처리 실행
         // 선택된 룸과 이어지는 타임라인을 취득
-        ref.read(selectedRoomProvider.notifier)
-          .getRoom();
+        if (room.id == null) {
+          throw Exception('not selected Room');
+        }
+        await ref.read(selectedRoomProvider.notifier).fetchRoom(room.id!);
         // room별 타임라인 취득
         if (room.id != null) {
-          ref
+          await ref
               .read(selectedTimelineListByRoomIdProvider.notifier)
-              .getTimelineByRoomId(room.id!);
+              .fetchTimelineByRoomId(room.id!);
         }
         // 상세 페이지로 이동
+        // ignore: use_build_context_synchronously
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => const RoomDetailPage()));
       },

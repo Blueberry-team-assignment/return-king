@@ -3,19 +3,22 @@ import 'package:return_king/features/room/domain/models/room.dart';
 import 'package:return_king/features/room/domain/usecases/add_room/add_room_command.dart';
 import 'package:return_king/features/room/domain/usecases/add_room/add_room_response.dart';
 import 'package:return_king/features/room/domain/usecases/add_room/add_room_usecase.dart';
+import 'package:return_king/features/room/domain/usecases/fetch_room_by_id/fetch_room_by_id_response.dart';
+import 'package:return_king/features/room/domain/usecases/fetch_room_by_id/fetch_room_by_id_usecase.dart';
+import 'package:return_king/features/room/domain/usecases/fetch_room_by_id/fetchl_room_by_id_query.dart';
 import 'package:return_king/shared/result.dart';
 
 class RoomNotifier extends StateNotifier<Room?> {
-  RoomNotifier(this.addRoomUsecase) : super(null);
+  RoomNotifier(this.addRoomUsecase, this.fetchRoomByIdUsecase) : super(null);
 
   final AddRoomUsecase addRoomUsecase;
+  final FetchRoomByIdUsecase fetchRoomByIdUsecase;
   // String roomId;
 
-  Room getRoom() {
-    if (state == null) {
-      throw Exception('not exists selected room');
-    }
-    return state!;
+  Future<Result<Room>> fetchRoom(String roomId) async {
+   FetchRoomByIdResponse  res = await fetchRoomByIdUsecase.execute(FetchRoomByIdQuery(roomId));
+    state = res.room;
+    return Result.ok(state!);
   }
 
   /// TODO

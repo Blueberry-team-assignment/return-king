@@ -10,7 +10,7 @@ class TimelineNotifier extends StateNotifier<List<Timeline>> {
 
   final FetchTimelineByRoomUsecase fetchTimelineByRoomUsecase;
 
-  Future<Result<List<Timeline>>> getTimelineByRoomId(String roomId) async {
+  Future<Result<List<Timeline>>> fetchTimelineByRoomId(String roomId) async {
     FetchTimelineByRoomResponse res =
         await fetchTimelineByRoomUsecase.execute(FetchTimelineByRoomQuery(roomId: roomId));
     state = res.timelines;

@@ -27,16 +27,22 @@ class FirebaseRoomRepository implements IRoomRepository {
   }
 
   @override
-  Future<Result<List<Room>>> getRoomByRoomId(String roomId) async {
+  Future<Result<Room>> getRoomById(String roomId) async {
     try {
       final querySnapshot = await _firestore
           .collection(Constants.rooms)
-          .where(Constants.userId,
-              isEqualTo: FirebaseAuth.instance.currentUser?.uid)
+          .where(
+            Constants.userId,
+            isEqualTo: FirebaseAuth.instance.currentUser?.uid,
+          )
+          .where(Constants.id, isEqualTo: roomId)
           .get();
-      final data =
-          querySnapshot.docs.map((doc) => Room.fromJson(doc.data())).toList();
-      return Result.ok(data);
+      if (querySnapshot.docs.isNotEmpty) {
+        final doc = querySnapshot.docs.first;
+        return Result.ok(Room.fromJson(doc.data()));
+      } else {
+        return Result.error(Exception('Room not Found'));
+      }
     } on Exception catch (e) {
       return Result.error(e);
     }
