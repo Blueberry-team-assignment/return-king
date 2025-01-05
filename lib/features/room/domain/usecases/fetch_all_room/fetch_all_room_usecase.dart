@@ -17,15 +17,20 @@ class FetchAllRoomUsecase
   @override
   Future<FetchAllRoomResponse> execute(FetchAllRoomQuery query) async {
     List<Room> rooms = [];
+
+    /// 유저가 가지고 있는 전체 룸을 취득.
     Result<List<Room>> roomListResult = await _repository.getAllRoomList();
     if (roomListResult.isError) {
+      // error핸들링
       throw roomListResult.getError;
     }
 
+    /// 유저가 가지고 있는 전체 타임라인을 취득.
     Result<List<Timeline>> timelineListResult =
         await _timelineRepository.getAllTimelines();
 
     if (timelineListResult.isError) {
+      // error핸들링
       throw timelineListResult.getError;
     }
 
