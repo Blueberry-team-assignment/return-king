@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:return_king/features/home/presentation/molecules/room_list_tab.dart';
 import 'package:return_king/features/home/presentation/molecules/timeline_tab.dart';
-import 'package:return_king/shared/providers/home/home_providers.dart';
-import 'package:return_king/shared/providers/room/room_providers.dart';
+import 'package:return_king/features/home/domain/providers/home_providers.dart';
+import 'package:return_king/features/room/domain/providers/room_providers.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});

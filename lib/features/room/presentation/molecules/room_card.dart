@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:return_king/features/room/domain/models/room.dart';
 import 'package:return_king/features/room/presentation/pages/room_detail_page.dart';
-import 'package:return_king/shared/providers/room/room_providers.dart';
-import 'package:return_king/features/timeline/domain/models/timeline.dart';
-import 'package:return_king/shared/providers/timeline/timeline_providers.dart';
+import 'package:return_king/features/room/domain/providers/room_providers.dart';
 import 'package:return_king/shared/presentation/atoms/avatar.dart';
 
 class RoomCard extends ConsumerWidget {
@@ -18,14 +16,21 @@ class RoomCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return InkWell(
-      onTap: () {
-        // 선택된 룸을 riverpod 상태에 설정
-        ref.read(selectedRoomProvider.notifier).state = room;
+      onTap: () async {
 
-        // 선택된 룸과 이어지는 타임라인을 riverpod 상태에 설정
-        List<Timeline> timelineList = ref.watch(timelineListProvider) ?? [];
-        ref.read(selectedTimelineListByRoomIdProvider.notifier).state =
-            timelineList.where((x) => x.roomId == room.id).toList();
+        /// 상세 페이지로 이동하기 전에 데이터 취득 처리 실행
+        // 선택된 룸과 이어지는 타임라인을 취득
+        /*
+        ref.read(selectedRoomProvider.notifier)
+          .getRoom();
+        // room별 타임라인 취득
+        if (room != null && room.id != null) {
+          ref
+              .read(selectedTimelineListByRoomIdProvider.notifier)
+              .getTimelineByRoomId(room.id!);
+        }
+        */
+
 
         // 상세 페이지로 이동
         Navigator.push(context,

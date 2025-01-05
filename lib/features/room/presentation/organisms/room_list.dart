@@ -4,7 +4,7 @@ import 'package:return_king/features/room/domain/models/room.dart';
 import 'package:return_king/features/room/presentation/atoms/buttons/basic_button.dart';
 import 'package:return_king/features/room/presentation/molecules/room_card.dart';
 import 'package:return_king/features/room/presentation/pages/room_detail_page.dart';
-import 'package:return_king/shared/providers/room/room_providers.dart';
+import 'package:return_king/features/room/domain/providers/room_providers.dart';
 
 class RoomList extends ConsumerWidget {
   const RoomList({super.key, required this.roomList});

@@ -1,5 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:return_king/features/room/domain/enums/sender_type.dart';
@@ -7,8 +5,9 @@ import 'package:return_king/features/room/domain/models/room.dart';
 import 'package:return_king/features/timeline/domain/models/timeline.dart';
 import 'package:return_king/features/timeline/presentation/molecules/input_timeline.dart';
 import 'package:return_king/features/timeline/presentation/organisms/slide_list_item.dart';
-import 'package:return_king/shared/providers/room/room_providers.dart';
-import 'package:return_king/shared/providers/timeline/timeline_providers.dart';
+import 'package:return_king/features/room/domain/providers/room_providers.dart';
+import 'package:return_king/features/timeline/domain/providers/timeline_providers.dart';
+import 'package:return_king/shared/result.dart';
 
 class RoomDetailTemplate extends ConsumerWidget {
   const RoomDetailTemplate({super.key, this.room, required this.timelineList})
@@ -23,10 +22,9 @@ class RoomDetailTemplate extends ConsumerWidget {
     TextEditingController messageController = TextEditingController();
     TextEditingController titleController = TextEditingController();
     return PopScope(
-        onPopInvokedWithResult: (isPopped, _) {
+        onPopInvokedWithResult: (isPopped, _) { // 뒤로가기 때 불리는 처리
           if (isPopped) {
-            ref.read(selectedRoomProvider.notifier).state = null;
-            ref.read(selectedTimelineListByRoomIdProvider.notifier).state = [];
+            ref.read(selectedRoomProvider.notifier).clearSelectedRoom();// 선택된 room정보를 초기화
           }
         },
         child: Scaffold(
@@ -63,45 +61,48 @@ class RoomDetailTemplate extends ConsumerWidget {
                 ),
           bottomSheet: InputTimeline(
             controller: messageController,
-            onPressed: () {
+            onPressed: () async {
               Room room;
-              var db = FirebaseFirestore.instance;
-              var userId = FirebaseAuth.instance.currentUser?.uid ?? '';
-              var now = DateTime.now().toUtc();
+              DateTime now = DateTime.now().toUtc();
               // room 취득
               if (isNewRoom || this.room == null) {
                 room = Room(
-                    id: db.collection('rooms').doc().id,
-                    userId: userId,
+                    id: null,
+                    userId: '', // repository에서 설정
                     name: titleController.text,
                     createdAt: now,
                     deleted: false,
                     lastTimelineId: null);
 
                 // 신규 룸 등록
-                db.collection('rooms').doc(room.id).set(room.toJson());
-                ref.read(selectedRoomProvider.notifier).state = room;
+                Result<Room> addRoomResult = await ref
+                    .read(selectedRoomProvider.notifier)
+                    .addRoom(title: titleController.text, createdAt: now);
+
+                /// TODO
+                if (addRoomResult.isError) {
+                  /*
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('룸 추가 실패.')),
+                  );
+                  */
+                } else {
+                  /*
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('룸 추가 성공.')),
+                  );
+                  */
+                }
+                room = addRoomResult.getValue;
               } else {
                 room = this.room!;
               }
               // message 등록
-
-              Timeline timeline = Timeline(
-                  id: db.collection('timelines').doc().id,
+              ref.read(timelineListProvider.notifier).addTimeline(
                   roomId: room.id ?? '',
-                  userId: userId,
                   senderType: SenderType.receiver,
                   content: messageController.text,
-                  createdAt: now,
-                  deleted: false);
-              db
-                  .collection('timelines')
-                  .doc(timeline.id)
-                  .set(timeline.toJson());
-              db
-                  .collection('rooms')
-                  .doc(room.id)
-                  .update({"lastTimelineId": timeline.id});
+                  createdAt: now);
 
               messageController.text = '';
             },
