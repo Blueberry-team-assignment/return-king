@@ -19,7 +19,8 @@ class TimelineListNotifier extends StateNotifier<List<Timeline>> {
   final FetchAllTimelineUsecase fetchAllTimelineUsecase;
 
   Future<void> fetchAllTimeline() async {
-    FetchAllTimelineResponse res = await fetchAllTimelineUsecase.execute(FetchAllTimelineQuery());
+    FetchAllTimelineResponse res =
+        await fetchAllTimelineUsecase.execute(FetchAllTimelineQuery());
     state = res.timelines;
   }
 
@@ -43,6 +44,10 @@ class TimelineListNotifier extends StateNotifier<List<Timeline>> {
   }
 
   void clearTimeline() {
-    state = [];
+    Future(() {
+      if (state.isNotEmpty) {
+        state = [];
+      }
+    });
   }
 }

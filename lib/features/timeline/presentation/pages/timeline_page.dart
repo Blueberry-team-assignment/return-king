@@ -9,6 +9,7 @@ class TimelinePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.read(timelineListProvider.notifier).fetchAllTimeline();
     List<Timeline> timelineList = ref.watch(timelineListProvider);
     return TimelineTemplate(timelineList: timelineList);
   }

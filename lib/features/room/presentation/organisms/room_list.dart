@@ -5,6 +5,7 @@ import 'package:return_king/features/room/presentation/atoms/buttons/basic_butto
 import 'package:return_king/features/room/presentation/molecules/room_card.dart';
 import 'package:return_king/features/room/presentation/pages/room_detail_page.dart';
 import 'package:return_king/features/room/domain/providers/room_providers.dart';
+import 'package:return_king/features/timeline/domain/providers/timeline_providers.dart';
 
 class RoomList extends ConsumerWidget {
   const RoomList({super.key, required this.roomList});
@@ -19,6 +20,9 @@ class RoomList extends ConsumerWidget {
             child: BasicButton(
                 childText: Text('작성', selectionColor: Colors.indigo[500]),
                 onPressed: () {
+                  ref
+                      .read(selectedTimelineListByRoomIdProvider.notifier)
+                      .clearSelectedRoom();
                   Navigator.push(
                       context,
                       MaterialPageRoute(

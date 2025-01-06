@@ -5,20 +5,34 @@ import 'package:return_king/features/room/domain/usecases/fetch_all_room/fetch_a
 import 'package:return_king/features/room/domain/usecases/fetch_all_room/fetch_all_room_usecase.dart';
 
 class RoomListNotifier extends StateNotifier<List<Room>> {
-  RoomListNotifier(this.fetchAllRoomUsecase)
-      : super([]) {
+  RoomListNotifier(this.fetchAllRoomUsecase) : super([]) {
     fetchRooms();
   }
 
-  FetchAllRoomUsecase fetchAllRoomUsecase;
+  final FetchAllRoomUsecase fetchAllRoomUsecase;
 
   Future<void> fetchRooms() async {
     FetchAllRoomResponse allRoomRes =
         await fetchAllRoomUsecase.execute(FetchAllRoomQuery());
+    desc();
     state = allRoomRes.roomList;
   }
 
+  void desc() {
+    state.sort((a, b) =>
+        b.createdAt.millisecondsSinceEpoch -
+        a.createdAt.millisecondsSinceEpoch);
+  }
+
+  void asc() {
+    state.sort((a, b) =>
+        a.createdAt.millisecondsSinceEpoch -
+        b.createdAt.millisecondsSinceEpoch);
+  }
+
   void clearRooms() {
-    state = [];
+    Future(() {
+      state = [];
+    });
   }
 }
