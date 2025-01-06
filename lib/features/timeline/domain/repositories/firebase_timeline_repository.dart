@@ -30,14 +30,15 @@ class FirebaseTimelineRepository implements ITimelineRepository {
   @override
   Future<Result<Timeline>> saveTimeline(Timeline timeline) async {
     try {
-      var id = _firestore.collection(Constants.timelines).doc().id;
+      var doc = _firestore.collection(Constants.timelines).doc();
       var data = timeline
           .copyWith(
-            id: id, userId: FirebaseAuth.instance.currentUser?.uid ?? '',
+            id: doc.id,
+            userId: FirebaseAuth.instance.currentUser?.uid ?? '',
             deleted: false
           )
           .toJson();
-      await _firestore.collection(Constants.timelines).add(data);
+      await doc.set(data);// id == doc id
       return Result.ok(Timeline.fromJson(data));
     } on Exception catch (e) {
       return Result.error(e);

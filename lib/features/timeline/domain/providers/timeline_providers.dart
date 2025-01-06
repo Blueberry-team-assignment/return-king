@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:return_king/features/room/domain/providers/room_providers.dart';
 import 'package:return_king/features/timeline/domain/models/timeline.dart';
 import 'package:return_king/features/timeline/domain/providers/notifiers/timeline_list_notifier.dart';
 import 'package:return_king/features/timeline/domain/providers/notifiers/timeline_notifier.dart';
@@ -30,7 +31,10 @@ final timelineRepositoryProvider = Provider<ITimelineRepository>(
 
 // DI: timeline추가 상세로직
 final addTimelineUsecaseProvider = Provider<AddTimelineUsecase>((ref) {
-  return AddTimelineUsecase(ref.read(timelineRepositoryProvider));
+  return AddTimelineUsecase(
+    ref.read(timelineRepositoryProvider),
+    ref.read(roomRepositoryProvider)
+  );
 });
 
 // DI: 유저 별 모든 timeline 리스트 취득 로직

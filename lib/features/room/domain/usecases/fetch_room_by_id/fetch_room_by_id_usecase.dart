@@ -1,7 +1,7 @@
 import 'package:return_king/features/room/domain/models/room.dart';
 import 'package:return_king/features/room/domain/repositories/i_room_repository.dart';
 import 'package:return_king/features/room/domain/usecases/fetch_room_by_id/fetch_room_by_id_response.dart';
-import 'package:return_king/features/room/domain/usecases/fetch_room_by_id/fetchl_room_by_id_query.dart';
+import 'package:return_king/features/room/domain/usecases/fetch_room_by_id/fetch_room_by_id_query.dart';
 import 'package:return_king/shared/result.dart';
 import 'package:return_king/shared/usecases/usecase.dart';
 

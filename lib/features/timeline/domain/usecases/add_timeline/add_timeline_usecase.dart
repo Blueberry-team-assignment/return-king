@@ -1,3 +1,4 @@
+import 'package:return_king/features/room/domain/repositories/i_room_repository.dart';
 import 'package:return_king/features/timeline/domain/models/timeline.dart';
 import 'package:return_king/features/timeline/domain/repositories/i_timeline_repository.dart';
 import 'package:return_king/features/timeline/domain/usecases/add_timeline/add_timeline_command.dart';
@@ -6,9 +7,10 @@ import 'package:return_king/shared/usecases/usecase.dart';
 
 class AddTimelineUsecase
     implements Usecase<AddTimelineCommand, AddTimelineResponse> {
-  final ITimelineRepository _repository;
+  AddTimelineUsecase(this._repository, this._roomRepository);
 
-  AddTimelineUsecase(this._repository);
+  final ITimelineRepository _repository;
+  final IRoomRepository _roomRepository;
 
   @override
   Future<AddTimelineResponse> execute(AddTimelineCommand command) async {
@@ -20,11 +22,14 @@ class AddTimelineUsecase
         content: command.content,
         createdAt: command.createdAt,
         deleted: false));
+
     if (result.isError) {
       throw result.getError;
     }
-    return AddTimelineResponse(
-      timeline: result.getValue
-    );
+    print('result: ${result.getValue.roomId}, ${result.getValue.id}');
+
+    await _roomRepository.updateTimelineId(
+        roomId: result.getValue.roomId, timelineId: result.getValue.id!);
+    return AddTimelineResponse(timeline: result.getValue);
   }
 }

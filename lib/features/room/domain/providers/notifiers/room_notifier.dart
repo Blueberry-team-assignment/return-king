@@ -6,7 +6,7 @@ import 'package:return_king/features/room/domain/usecases/add_room/add_room_resp
 import 'package:return_king/features/room/domain/usecases/add_room/add_room_usecase.dart';
 import 'package:return_king/features/room/domain/usecases/fetch_room_by_id/fetch_room_by_id_response.dart';
 import 'package:return_king/features/room/domain/usecases/fetch_room_by_id/fetch_room_by_id_usecase.dart';
-import 'package:return_king/features/room/domain/usecases/fetch_room_by_id/fetchl_room_by_id_query.dart';
+import 'package:return_king/features/room/domain/usecases/fetch_room_by_id/fetch_room_by_id_query.dart';
 import 'package:return_king/shared/result.dart';
 
 class RoomNotifier extends StateNotifier<Room?> {
@@ -33,7 +33,7 @@ class RoomNotifier extends StateNotifier<Room?> {
     return Result.ok(state);
   }
 
-  void updatedLastTimelineId(String timelineId) async {
+  Future<void> updatedLastTimelineId(String timelineId) async {
     if (state != null) {
       throw Exception('not exists selected room');
     }

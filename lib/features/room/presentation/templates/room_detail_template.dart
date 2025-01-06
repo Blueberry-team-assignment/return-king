@@ -81,6 +81,12 @@ class RoomDetailTemplate extends ConsumerWidget {
               }
               // room 취득
               if (isNewRoom || this.room == null) {
+                if (titleController.text.isEmpty) {
+                  scaffoldMessenger.showSnackBar(
+                    const SnackBar(content: Text('상단의 룸 답례대상을 입력해주세요')),
+                  );
+                  return;
+                }
                 // 신규 룸 등록
                 Result<Room> addRoomResult = await ref
                     .read(selectedRoomProvider.notifier)
@@ -97,6 +103,13 @@ class RoomDetailTemplate extends ConsumerWidget {
                 room = this.room!;
               }
               // message 등록
+              if (messageController.text.isEmpty) {
+                scaffoldMessenger.showSnackBar(
+                  const SnackBar(content: Text('타임라인 메세지를 입력해주세요')),
+                );
+                return;
+              }
+              // timelineId를 room에 등록
               Result<Timeline> timelineResult = await ref
                   .read(timelineListProvider.notifier)
                   .addTimeline(
@@ -111,19 +124,16 @@ class RoomDetailTemplate extends ConsumerWidget {
                 return;
               }
 
+              /// 룸 별 타임라인 다시 불러오기
+              await ref
+                  .read(selectedTimelineListByRoomIdProvider.notifier)
+                  .fetchTimelineByRoomId(room.id!);
+
+              await ref.read(roomListProvider.notifier).fetchRooms();
+
               scaffoldMessenger.showSnackBar(
                 const SnackBar(content: Text('타임라인 추가 성공.')),
               );
-
-              /// 최신 타임라인 정보를 룸에 등록
-              ref
-                  .read(selectedRoomProvider.notifier)
-                  .updatedLastTimelineId(timelineResult.getValue.id!);
-
-              /// 룸 별 타임라인 다시 불러오기
-              ref
-                  .read(selectedTimelineListByRoomIdProvider.notifier)
-                  .fetchTimelineByRoomId(room.id!);
 
               messageController.text = '';
 
@@ -131,17 +141,21 @@ class RoomDetailTemplate extends ConsumerWidget {
               Future.delayed(const Duration(milliseconds: 100), () {
                 /// Delay를 추가하는 이유:
                 /// 위젯 트리와 상태 업데이트가 비동기적으로 이루어짐
-                /// 새로운 아이템이 리스트에 추가되거나 UI가 갱신되는 경우 레이아웃이 
+                /// 새로운 아이템이 리스트에 추가되거나 UI가 갱신되는 경우 레이아웃이
                 /// 완전히 갱신되지 않은 상태에서 스크롤이 조작이 이루어질 수 있음
                 /// (Flutter의 프레임 빌드 주기)
                 if (scrollController.hasClients) {
                   /// scrollController가 연결된 ListView 같은 스크롤 가능한 위젯을 가자고 있는지 확인
                   scrollController.animateTo(
-                      scrollController
-                          .position.maxScrollExtent, /// 스크롤 가능한 최대 범위의 최대 위치
-                      duration:
-                          const Duration(milliseconds: 300), /// 애니메이션 지속시간 0.3초
-                      curve: Curves.easeOut); /// 스크롤이 끝날 때 까지 감속하며 자연스럽게 멈추는 효과
+                      scrollController.position.maxScrollExtent,
+
+                      /// 스크롤 가능한 최대 범위의 최대 위치
+                      duration: const Duration(milliseconds: 300),
+
+                      /// 애니메이션 지속시간 0.3초
+                      curve: Curves.easeOut);
+
+                  /// 스크롤이 끝날 때 까지 감속하며 자연스럽게 멈추는 효과
                 }
               });
             },
