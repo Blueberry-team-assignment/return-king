@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:return_king/features/room/domain/models/room.dart';
+import 'package:return_king/features/room/domain/providers/room_providers.dart';
 import 'package:return_king/features/room/presentation/pages/room_detail_page.dart';
-import 'package:return_king/shared/providers/room_providers.dart';
-import 'package:return_king/features/timeline/domain/models/timeline.dart';
-import 'package:return_king/shared/providers/timeline_providers.dart';
+import 'package:return_king/features/timeline/domain/providers/timeline_providers.dart';
 import 'package:return_king/shared/presentation/atoms/avatar.dart';
 
 class RoomCard extends ConsumerWidget {
@@ -18,16 +17,21 @@ class RoomCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return InkWell(
-      onTap: () {
-        // 선택된 룸을 riverpod 상태에 설정
-        ref.read(selectedRoomProvider.notifier).state = room;
-
-        // 선택된 룸과 이어지는 타임라인을 riverpod 상태에 설정
-        List<Timeline> timelineList = ref.watch(timelineListProvider) ?? [];
-        ref.read(selectedTimelineListByRoomIdProvider.notifier).state =
-            timelineList.where((x) => x.roomId == room.id).toList();
-
+      onTap: () async {
+        /// 상세 페이지로 이동하기 전에 데이터 취득 처리 실행
+        // 선택된 룸과 이어지는 타임라인을 취득
+        if (room.id == null) {
+          throw Exception('not selected Room');
+        }
+        await ref.read(selectedRoomProvider.notifier).fetchRoom(room.id!);
+        // room별 타임라인 취득
+        if (room.id != null) {
+          await ref
+              .read(selectedTimelineListByRoomIdProvider.notifier)
+              .fetchTimelineByRoomId(room.id!);
+        }
         // 상세 페이지로 이동
+        // ignore: use_build_context_synchronously
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => const RoomDetailPage()));
       },
@@ -51,7 +55,7 @@ class RoomCard extends ConsumerWidget {
                     Column(
                       children: [
                         Text(
-                          room.lastTimeline.createdAt.toString(),
+                          room.lastTimeline?.createdAt.toString() ?? '',
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                         ),
@@ -61,7 +65,7 @@ class RoomCard extends ConsumerWidget {
                           maxLines: 1,
                         ),
                         Text(
-                          room.lastTimeline.content,
+                          room.lastTimeline?.content ?? '',
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
                         ),

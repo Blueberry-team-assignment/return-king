@@ -12,7 +12,7 @@ class SlideListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: Key(timeline.id),
+      key: Key(timeline.id!),
       background: Container(color: Colors.green),
       secondaryBackground: Container(
         color: Colors.red,
@@ -26,5 +26,4 @@ class SlideListItem extends StatelessWidget {
       child: TimelineRow(room: room, timeline: timeline),
     );
   }
-
 }

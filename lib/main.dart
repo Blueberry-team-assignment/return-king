@@ -6,9 +6,16 @@ import 'package:return_king/features/login/presentation/organisms/auth_gate.dart
 import 'package:return_king/firebase_options.dart';
 
 Future<void> main() async {
+  /// region 초기 설정
+
+  /// dotenv설정
   await dotenv.load(fileName: ".env");
+
+  /// Firebase설정
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  ///endregion
   runApp(const ProviderScope(child: MyApp()));
 }
 

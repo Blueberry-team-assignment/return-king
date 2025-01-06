@@ -7,8 +7,9 @@ part 'generated/timeline.g.dart';
 @freezed
 class Timeline with _$Timeline {
   const factory Timeline({
-    required String id, // Timeline 고유 ID
+    required String? id, // Timeline 고유 ID
     required String roomId, // 연결된 Room의 ID
+    required String userId, // firebase의 uid
     required SenderType senderType, // 발신자 타입 (예: "user", "system")
     required String content, // 메시지 내용
     required DateTime createdAt, // 생성 날짜 및 시간

@@ -20,8 +20,9 @@ Timeline _$TimelineFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Timeline {
-  String get id => throw _privateConstructorUsedError; // Timeline 고유 ID
+  String? get id => throw _privateConstructorUsedError; // Timeline 고유 ID
   String get roomId => throw _privateConstructorUsedError; // 연결된 Room의 ID
+  String get userId => throw _privateConstructorUsedError; // firebase의 uid
   SenderType get senderType =>
       throw _privateConstructorUsedError; // 발신자 타입 (예: "user", "system")
   String get content => throw _privateConstructorUsedError; // 메시지 내용
@@ -44,8 +45,9 @@ abstract class $TimelineCopyWith<$Res> {
       _$TimelineCopyWithImpl<$Res, Timeline>;
   @useResult
   $Res call(
-      {String id,
+      {String? id,
       String roomId,
+      String userId,
       SenderType senderType,
       String content,
       DateTime createdAt,
@@ -67,21 +69,26 @@ class _$TimelineCopyWithImpl<$Res, $Val extends Timeline>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? roomId = null,
+    Object? userId = null,
     Object? senderType = null,
     Object? content = null,
     Object? createdAt = null,
     Object? deleted = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       roomId: null == roomId
           ? _value.roomId
           : roomId // ignore: cast_nullable_to_non_nullable
+              as String,
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
               as String,
       senderType: null == senderType
           ? _value.senderType
@@ -112,8 +119,9 @@ abstract class _$$TimelineImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id,
+      {String? id,
       String roomId,
+      String userId,
       SenderType senderType,
       String content,
       DateTime createdAt,
@@ -133,21 +141,26 @@ class __$$TimelineImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? roomId = null,
+    Object? userId = null,
     Object? senderType = null,
     Object? content = null,
     Object? createdAt = null,
     Object? deleted = null,
   }) {
     return _then(_$TimelineImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       roomId: null == roomId
           ? _value.roomId
           : roomId // ignore: cast_nullable_to_non_nullable
+              as String,
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
               as String,
       senderType: null == senderType
           ? _value.senderType
@@ -175,6 +188,7 @@ class _$TimelineImpl implements _Timeline {
   const _$TimelineImpl(
       {required this.id,
       required this.roomId,
+      required this.userId,
       required this.senderType,
       required this.content,
       required this.createdAt,
@@ -184,11 +198,14 @@ class _$TimelineImpl implements _Timeline {
       _$$TimelineImplFromJson(json);
 
   @override
-  final String id;
+  final String? id;
 // Timeline 고유 ID
   @override
   final String roomId;
 // 연결된 Room의 ID
+  @override
+  final String userId;
+// firebase의 uid
   @override
   final SenderType senderType;
 // 발신자 타입 (예: "user", "system")
@@ -203,7 +220,7 @@ class _$TimelineImpl implements _Timeline {
 
   @override
   String toString() {
-    return 'Timeline(id: $id, roomId: $roomId, senderType: $senderType, content: $content, createdAt: $createdAt, deleted: $deleted)';
+    return 'Timeline(id: $id, roomId: $roomId, userId: $userId, senderType: $senderType, content: $content, createdAt: $createdAt, deleted: $deleted)';
   }
 
   @override
@@ -213,6 +230,7 @@ class _$TimelineImpl implements _Timeline {
             other is _$TimelineImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.roomId, roomId) || other.roomId == roomId) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.senderType, senderType) ||
                 other.senderType == senderType) &&
             (identical(other.content, content) || other.content == content) &&
@@ -224,7 +242,7 @@ class _$TimelineImpl implements _Timeline {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, roomId, senderType, content, createdAt, deleted);
+      runtimeType, id, roomId, userId, senderType, content, createdAt, deleted);
 
   /// Create a copy of Timeline
   /// with the given fields replaced by the non-null parameter values.
@@ -244,8 +262,9 @@ class _$TimelineImpl implements _Timeline {
 
 abstract class _Timeline implements Timeline {
   const factory _Timeline(
-      {required final String id,
+      {required final String? id,
       required final String roomId,
+      required final String userId,
       required final SenderType senderType,
       required final String content,
       required final DateTime createdAt,
@@ -255,9 +274,11 @@ abstract class _Timeline implements Timeline {
       _$TimelineImpl.fromJson;
 
   @override
-  String get id; // Timeline 고유 ID
+  String? get id; // Timeline 고유 ID
   @override
   String get roomId; // 연결된 Room의 ID
+  @override
+  String get userId; // firebase의 uid
   @override
   SenderType get senderType; // 발신자 타입 (예: "user", "system")
   @override
