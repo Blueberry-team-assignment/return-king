@@ -26,8 +26,6 @@ class AddTimelineUsecase
     if (result.isError) {
       throw result.getError;
     }
-    print('result: ${result.getValue.roomId}, ${result.getValue.id}');
-
     await _roomRepository.updateTimelineId(
         roomId: result.getValue.roomId, timelineId: result.getValue.id!);
     return AddTimelineResponse(timeline: result.getValue);
