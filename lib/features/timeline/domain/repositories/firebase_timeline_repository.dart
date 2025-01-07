@@ -33,12 +33,11 @@ class FirebaseTimelineRepository implements ITimelineRepository {
       var doc = _firestore.collection(Constants.timelines).doc();
       var data = timeline
           .copyWith(
-            id: doc.id,
-            userId: FirebaseAuth.instance.currentUser?.uid ?? '',
-            deleted: false
-          )
+              id: doc.id,
+              userId: FirebaseAuth.instance.currentUser?.uid ?? '',
+              deleted: false)
           .toJson();
-      await doc.set(data);// id == doc id
+      await doc.set(data); // id == doc id
       return Result.ok(Timeline.fromJson(data));
     } on Exception catch (e) {
       return Result.error(e);
@@ -52,8 +51,7 @@ class FirebaseTimelineRepository implements ITimelineRepository {
           .collection(Constants.timelines)
           .where(Constants.userId,
               isEqualTo: FirebaseAuth.instance.currentUser?.uid)
-          .where(Constants.roomId,
-              isEqualTo: roomId)
+          .where(Constants.roomId, isEqualTo: roomId)
           .get();
       final result = querySnapshot.docs
           .map((doc) => Timeline.fromJson(doc.data()))

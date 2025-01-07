@@ -27,7 +27,7 @@ mixin _$Room {
   bool get deleted => throw _privateConstructorUsedError; // 삭제 여부
   String? get lastTimelineId =>
       throw _privateConstructorUsedError; // 최신 Timeline의 ID (nullable)
-// @JsonKey(includeFromJson: false, includeToJson: false) Timeline? lastTimeline, // 최신 Timeline (nullable)
+// ignore: invalid_annotation_target
   @JsonKey(includeFromJson: false, includeToJson: false)
   Timeline? get lastTimeline => throw _privateConstructorUsedError;
 
@@ -236,7 +236,7 @@ class _$RoomImpl implements _Room {
   @override
   final String? lastTimelineId;
 // 최신 Timeline의 ID (nullable)
-// @JsonKey(includeFromJson: false, includeToJson: false) Timeline? lastTimeline, // 최신 Timeline (nullable)
+// ignore: invalid_annotation_target
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   final Timeline? lastTimeline;
@@ -309,7 +309,7 @@ abstract class _Room implements Room {
   bool get deleted; // 삭제 여부
   @override
   String? get lastTimelineId; // 최신 Timeline의 ID (nullable)
-// @JsonKey(includeFromJson: false, includeToJson: false) Timeline? lastTimeline, // 최신 Timeline (nullable)
+// ignore: invalid_annotation_target
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   Timeline? get lastTimeline;

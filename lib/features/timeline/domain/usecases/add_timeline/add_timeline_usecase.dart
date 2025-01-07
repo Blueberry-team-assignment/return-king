@@ -20,6 +20,7 @@ class AddTimelineUsecase
         userId: '',
         senderType: command.senderType,
         content: command.content,
+        giftDate: command.giftDate,
         createdAt: command.createdAt,
         deleted: false));
 

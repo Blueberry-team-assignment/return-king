@@ -28,16 +28,19 @@ class TimelineListNotifier extends StateNotifier<List<Timeline>> {
     return state;
   }
 
-  Future<Result<Timeline>> addTimeline(
-      {required String roomId,
-      required SenderType senderType,
-      required String content,
-      required DateTime createdAt}) async {
+  Future<Result<Timeline>> addTimeline({
+    required String roomId,
+    required SenderType senderType,
+    required String content,
+    required DateTime giftDate,
+    required DateTime createdAt
+  }) async {
     AddTimelineResponse addTimelineUsecaseResult =
         await addTimelineUsecase.execute(AddTimelineCommand(
             roomId: roomId,
             senderType: senderType,
             content: content,
+            giftDate: giftDate,
             createdAt: createdAt));
     state = [...state, addTimelineUsecaseResult.timeline];
     return Result.ok(addTimelineUsecaseResult.timeline);

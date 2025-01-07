@@ -20,7 +20,7 @@ class InputTimeline extends StatelessWidget {
                   child: TextField(
                 controller: controller,
                 decoration: const InputDecoration(
-                    hintText: '타임라인에 기록할 내용을 입력해주세요', border: InputBorder.none),
+                    hintText: '기록할 내용을 입력해주세요', border: InputBorder.none),
               )),
               IconButton(
                 icon: const Icon(Icons.send),

@@ -26,6 +26,7 @@ mixin _$Timeline {
   SenderType get senderType =>
       throw _privateConstructorUsedError; // 발신자 타입 (예: "user", "system")
   String get content => throw _privateConstructorUsedError; // 메시지 내용
+  DateTime get giftDate => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError; // 생성 날짜 및 시간
   bool get deleted => throw _privateConstructorUsedError;
 
@@ -50,6 +51,7 @@ abstract class $TimelineCopyWith<$Res> {
       String userId,
       SenderType senderType,
       String content,
+      DateTime giftDate,
       DateTime createdAt,
       bool deleted});
 }
@@ -74,6 +76,7 @@ class _$TimelineCopyWithImpl<$Res, $Val extends Timeline>
     Object? userId = null,
     Object? senderType = null,
     Object? content = null,
+    Object? giftDate = null,
     Object? createdAt = null,
     Object? deleted = null,
   }) {
@@ -98,6 +101,10 @@ class _$TimelineCopyWithImpl<$Res, $Val extends Timeline>
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String,
+      giftDate: null == giftDate
+          ? _value.giftDate
+          : giftDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -124,6 +131,7 @@ abstract class _$$TimelineImplCopyWith<$Res>
       String userId,
       SenderType senderType,
       String content,
+      DateTime giftDate,
       DateTime createdAt,
       bool deleted});
 }
@@ -146,6 +154,7 @@ class __$$TimelineImplCopyWithImpl<$Res>
     Object? userId = null,
     Object? senderType = null,
     Object? content = null,
+    Object? giftDate = null,
     Object? createdAt = null,
     Object? deleted = null,
   }) {
@@ -170,6 +179,10 @@ class __$$TimelineImplCopyWithImpl<$Res>
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String,
+      giftDate: null == giftDate
+          ? _value.giftDate
+          : giftDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -191,6 +204,7 @@ class _$TimelineImpl implements _Timeline {
       required this.userId,
       required this.senderType,
       required this.content,
+      required this.giftDate,
       required this.createdAt,
       required this.deleted});
 
@@ -213,6 +227,8 @@ class _$TimelineImpl implements _Timeline {
   final String content;
 // 메시지 내용
   @override
+  final DateTime giftDate;
+  @override
   final DateTime createdAt;
 // 생성 날짜 및 시간
   @override
@@ -220,7 +236,7 @@ class _$TimelineImpl implements _Timeline {
 
   @override
   String toString() {
-    return 'Timeline(id: $id, roomId: $roomId, userId: $userId, senderType: $senderType, content: $content, createdAt: $createdAt, deleted: $deleted)';
+    return 'Timeline(id: $id, roomId: $roomId, userId: $userId, senderType: $senderType, content: $content, giftDate: $giftDate, createdAt: $createdAt, deleted: $deleted)';
   }
 
   @override
@@ -234,6 +250,8 @@ class _$TimelineImpl implements _Timeline {
             (identical(other.senderType, senderType) ||
                 other.senderType == senderType) &&
             (identical(other.content, content) || other.content == content) &&
+            (identical(other.giftDate, giftDate) ||
+                other.giftDate == giftDate) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.deleted, deleted) || other.deleted == deleted));
@@ -241,8 +259,8 @@ class _$TimelineImpl implements _Timeline {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, roomId, userId, senderType, content, createdAt, deleted);
+  int get hashCode => Object.hash(runtimeType, id, roomId, userId, senderType,
+      content, giftDate, createdAt, deleted);
 
   /// Create a copy of Timeline
   /// with the given fields replaced by the non-null parameter values.
@@ -267,6 +285,7 @@ abstract class _Timeline implements Timeline {
       required final String userId,
       required final SenderType senderType,
       required final String content,
+      required final DateTime giftDate,
       required final DateTime createdAt,
       required final bool deleted}) = _$TimelineImpl;
 
@@ -283,6 +302,8 @@ abstract class _Timeline implements Timeline {
   SenderType get senderType; // 발신자 타입 (예: "user", "system")
   @override
   String get content; // 메시지 내용
+  @override
+  DateTime get giftDate;
   @override
   DateTime get createdAt; // 생성 날짜 및 시간
   @override

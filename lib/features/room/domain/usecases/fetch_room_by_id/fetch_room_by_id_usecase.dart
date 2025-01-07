@@ -13,7 +13,6 @@ class FetchRoomByIdUsecase
 
   @override
   Future<FetchRoomByIdResponse> execute(FetchRoomByIdQuery query) async {
-
     Result<Room> roomResult = await _repository.getRoomById(query.id);
     if (roomResult.isError) {
       // error핸들링

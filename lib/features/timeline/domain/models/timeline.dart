@@ -12,6 +12,7 @@ class Timeline with _$Timeline {
     required String userId, // firebase의 uid
     required SenderType senderType, // 발신자 타입 (예: "user", "system")
     required String content, // 메시지 내용
+    required DateTime giftDate, // 답례 받은 날 혹은 선물 준 날
     required DateTime createdAt, // 생성 날짜 및 시간
     required bool deleted, // 삭제 여부
   }) = _Timeline;

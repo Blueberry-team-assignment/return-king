@@ -5,5 +5,6 @@ abstract class IRoomRepository {
   Future<Result<List<Room>>> getAllRoomList();
   Future<Result<Room>> getRoomById(String id);
   Future<Result<Room>> saveRoom(Room room);
-  Future<Result<bool>> updateTimelineId({required String roomId, required String timelineId});
+  Future<Result<bool>> updateTimelineId(
+      {required String roomId, required String timelineId});
 }

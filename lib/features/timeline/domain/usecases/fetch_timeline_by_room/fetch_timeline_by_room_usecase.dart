@@ -10,7 +10,8 @@ class FetchTimelineByRoomUsecase
   final ITimelineRepository _repository;
 
   @override
-  Future<FetchTimelineByRoomResponse> execute(FetchTimelineByRoomQuery command) async {
+  Future<FetchTimelineByRoomResponse> execute(
+      FetchTimelineByRoomQuery command) async {
     var timelineListResult =
         await _repository.getTimelinesByRoomId(command.roomId);
     if (timelineListResult.isError) {
