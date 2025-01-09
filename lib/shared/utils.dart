@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:return_king/features/room/domain/enums/sender_type.dart';
-import 'package:return_king/features/timeline/domain/models/timeline.dart';
+import 'package:return_king/features/timeline/domain/models/dto/timeline_dto.dart';
 
-bool isRightAlign(Timeline timeline) {
-  return SenderType.receiver == timeline.senderType;
+bool isRightAlign(TimelineDto timelineDto) {
+  return SenderType.receiver == timelineDto.senderType;
 }
 
-MainAxisAlignment getMainAlign(Timeline timeline) {
-  return isRightAlign(timeline)
+MainAxisAlignment getMainAlign(TimelineDto timelineDto) {
+  return isRightAlign(timelineDto)
       ? MainAxisAlignment.end
       : MainAxisAlignment.start;
 }
 
-CrossAxisAlignment getCrossAlign(Timeline timeline) {
-  return isRightAlign(timeline)
+CrossAxisAlignment getCrossAlign(TimelineDto timelineDto) {
+  return isRightAlign(timelineDto)
       ? CrossAxisAlignment.end
       : CrossAxisAlignment.start;
 }

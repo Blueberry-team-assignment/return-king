@@ -26,7 +26,8 @@ mixin _$Timeline {
   SenderType get senderType =>
       throw _privateConstructorUsedError; // 발신자 타입 (예: "user", "system")
   String get content => throw _privateConstructorUsedError; // 메시지 내용
-  DateTime get giftDate => throw _privateConstructorUsedError;
+  DateTime get giftDate =>
+      throw _privateConstructorUsedError; // 답례 받은 날 혹은 선물 준 날
   DateTime get createdAt => throw _privateConstructorUsedError; // 생성 날짜 및 시간
   bool get deleted => throw _privateConstructorUsedError;
 
@@ -228,6 +229,7 @@ class _$TimelineImpl implements _Timeline {
 // 메시지 내용
   @override
   final DateTime giftDate;
+// 답례 받은 날 혹은 선물 준 날
   @override
   final DateTime createdAt;
 // 생성 날짜 및 시간
@@ -303,7 +305,7 @@ abstract class _Timeline implements Timeline {
   @override
   String get content; // 메시지 내용
   @override
-  DateTime get giftDate;
+  DateTime get giftDate; // 답례 받은 날 혹은 선물 준 날
   @override
   DateTime get createdAt; // 생성 날짜 및 시간
   @override

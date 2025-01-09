@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:return_king/features/room/domain/enums/sender_type.dart';
 import 'package:return_king/features/room/domain/models/room.dart';
-import 'package:return_king/features/timeline/domain/models/timeline.dart';
+import 'package:return_king/features/timeline/domain/models/dto/timeline_dto.dart';
 import 'package:return_king/features/timeline/presentation/molecules/input_timeline.dart';
 import 'package:return_king/features/timeline/presentation/organisms/slide_list_item.dart';
 import 'package:return_king/features/room/domain/providers/room_providers.dart';
@@ -13,11 +13,12 @@ import 'package:scroll_date_picker/scroll_date_picker.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 class RoomDetailTemplate extends ConsumerWidget {
-  const RoomDetailTemplate({super.key, this.room, required this.timelineList})
+  const RoomDetailTemplate(
+      {super.key, this.room, required this.timelineDtoList})
       : isNewRoom = room == null;
 
   final Room? room;
-  final List<Timeline> timelineList;
+  final List<TimelineDto> timelineDtoList;
   final bool isNewRoom;
   final int bottomSheetHeight = 60;
 
@@ -73,8 +74,8 @@ class RoomDetailTemplate extends ConsumerWidget {
       return;
     }
     // timelineId를 room에 등록
-    Result<Timeline> timelineResult = await ref
-        .read(timelineListProvider.notifier)
+    Result<TimelineDto> timelineResult = await ref
+        .read(selectedTimelineListByRoomIdProvider.notifier)
         .addTimeline(
             roomId: room.id ?? '',
             senderType: selectedSenderType,
@@ -165,132 +166,123 @@ class RoomDetailTemplate extends ConsumerWidget {
                       overflow: TextOverflow.ellipsis,
                     )),
           body: Column(
-                  children: [
-                    isNewRoom && timelineList.isEmpty
-              ? const Expanded(child: SizedBox())
-              : Expanded(
-                        child: ListView.builder(
+            children: [
+              isNewRoom && timelineDtoList.isEmpty
+                  ? const Expanded(child: SizedBox())
+                  : Expanded(
+                      child: ListView.builder(
                       controller: scrollController,
-                      itemCount: timelineList.length,
+                      itemCount: timelineDtoList.length,
                       itemBuilder: (context, index) {
                         return SlideListItem(
-                            room: room, timeline: timelineList[index]);
+                            room: room, timelineDto: timelineDtoList[index]);
                       },
                     )),
-                    Column(
-                      children: [
-                        Row(children: [
-                          Flexible(
-                            fit: FlexFit.tight,
-                            child: ToggleSwitch(
-                              initialLabelIndex: 0,
-                              minWidth: double.infinity,
-                              activeFgColor: Colors.white,
-                              inactiveBgColor: Colors.grey,
-                              inactiveFgColor: Colors.white,
-                              totalSwitches: 2,
-                              labels: [
-                                (getShortName(room?.name) ?? '👤'),
-                                '나에게'
-                              ],
-                              activeBgColors: const [
-                                [Colors.blue],
-                                [Colors.pink]
-                              ],
-                              onToggle: (index) {
-                                selectedSenderType = SenderType.values[index!];
+              Column(
+                children: [
+                  Row(children: [
+                    Flexible(
+                      fit: FlexFit.tight,
+                      child: ToggleSwitch(
+                        initialLabelIndex: 0,
+                        minWidth: double.infinity,
+                        activeFgColor: Colors.white,
+                        inactiveBgColor: Colors.grey,
+                        inactiveFgColor: Colors.white,
+                        totalSwitches: 2,
+                        labels: [(getShortName(room?.name) ?? '👤'), '나에게'],
+                        activeBgColors: const [
+                          [Colors.blue],
+                          [Colors.pink]
+                        ],
+                        onToggle: (index) {
+                          selectedSenderType = SenderType.values[index!];
+                        },
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () async {
+                        showModalBottomSheet<void>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Consumer(
+                              builder: (context, ref, child) {
+                                return Column(children: [
+                                  Container(
+                                    alignment: Alignment.centerRight,
+                                    padding: const EdgeInsets.only(right: 48),
+                                    child: TextButton(
+                                      onPressed: () {
+                                        ref
+                                            .read(selectedGiftDateProvider
+                                                .notifier)
+                                            .state = DateTime.now();
+                                      },
+                                      child: const Text(
+                                        "오늘",
+                                        style: TextStyle(color: Colors.red),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 250,
+                                    child: ScrollDatePicker(
+                                      selectedDate:
+                                          ref.watch(selectedGiftDateProvider),
+                                      locale: const Locale('ko'),
+                                      scrollViewOptions:
+                                          const DatePickerScrollViewOptions(
+                                              year: ScrollViewDetailOptions(
+                                                label: '년',
+                                                margin:
+                                                    EdgeInsets.only(right: 8),
+                                              ),
+                                              month: ScrollViewDetailOptions(
+                                                label: '월',
+                                                margin:
+                                                    EdgeInsets.only(right: 8),
+                                              ),
+                                              day: ScrollViewDetailOptions(
+                                                label: '일',
+                                              )),
+                                      onDateTimeChanged: (DateTime value) {
+                                        ref
+                                            .read(selectedGiftDateProvider
+                                                .notifier)
+                                            .state = value;
+                                      },
+                                    ),
+                                  )
+                                ]);
                               },
-                            ),
-                          ),
-                          ElevatedButton(
-                            onPressed: () async {
-                              showModalBottomSheet<void>(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return Consumer(
-                                    builder: (context, ref, child) {
-                                      return Column(children: [
-                                        Container(
-                                          alignment: Alignment.centerRight,
-                                          padding:
-                                              const EdgeInsets.only(right: 48),
-                                          child: TextButton(
-                                            onPressed: () {
-                                              ref
-                                                  .read(selectedGiftDateProvider
-                                                      .notifier)
-                                                  .state = DateTime.now();
-                                            },
-                                            child: const Text(
-                                              "오늘",
-                                              style:
-                                                  TextStyle(color: Colors.red),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 250,
-                                          child: ScrollDatePicker(
-                                            selectedDate: ref.watch(
-                                                selectedGiftDateProvider),
-                                            locale: const Locale('ko'),
-                                            scrollViewOptions:
-                                                const DatePickerScrollViewOptions(
-                                                    year:
-                                                        ScrollViewDetailOptions(
-                                                      label: '년',
-                                                      margin: EdgeInsets.only(
-                                                          right: 8),
-                                                    ),
-                                                    month:
-                                                        ScrollViewDetailOptions(
-                                                      label: '월',
-                                                      margin: EdgeInsets.only(
-                                                          right: 8),
-                                                    ),
-                                                    day:
-                                                        ScrollViewDetailOptions(
-                                                      label: '일',
-                                                    )),
-                                            onDateTimeChanged:
-                                                (DateTime value) {
-                                              ref
-                                                  .read(selectedGiftDateProvider
-                                                      .notifier)
-                                                  .state = value;
-                                            },
-                                          ),
-                                        )
-                                      ]);
-                                    },
-                                  );
-                                },
-                              );
-                            },
-                            child: Text(
-                                DateFormat('yy/MM/dd').format(DateTime.now()) ==
-                                        DateFormat('yy/MM/dd').format(
-                                            ref.watch(selectedGiftDateProvider))
-                                    ? '오늘'
-                                    : DateFormat('yy/MM/dd').format(
-                                        ref.watch(selectedGiftDateProvider))),
-                          )
-                        ]),
-                        InputTimeline(
-                          controller: messageController,
-                          onPressed: () => saveTimeline(
-                              context,
-                              titleController,
-                              messageController,
-                              scrollController,
-                              scaffoldMessenger,
-                              ref,
-                              selectedSenderType),
-                        ),
-                      ],
+                            );
+                          },
+                        );
+                      },
+                      child: Text(DateFormat('yy/MM/dd')
+                                  .format(DateTime.now()) ==
+                              DateFormat('yy/MM/dd')
+                                  .format(ref.watch(selectedGiftDateProvider))
+                          ? '오늘'
+                          : DateFormat('yy/MM/dd')
+                              .format(ref.watch(selectedGiftDateProvider))),
                     )
-                  ],
-                ),
+                  ]),
+                  InputTimeline(
+                    controller: messageController,
+                    onPressed: () => saveTimeline(
+                        context,
+                        titleController,
+                        messageController,
+                        scrollController,
+                        scaffoldMessenger,
+                        ref,
+                        selectedSenderType),
+                  ),
+                ],
+              )
+            ],
+          ),
         ));
   }
 }

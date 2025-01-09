@@ -1,4 +1,5 @@
 import 'package:return_king/features/room/domain/repositories/i_room_repository.dart';
+import 'package:return_king/features/timeline/domain/models/dto/timeline_dto.dart';
 import 'package:return_king/features/timeline/domain/models/timeline.dart';
 import 'package:return_king/features/timeline/domain/repositories/i_timeline_repository.dart';
 import 'package:return_king/features/timeline/domain/usecases/add_timeline/add_timeline_command.dart';
@@ -29,6 +30,18 @@ class AddTimelineUsecase
     }
     await _roomRepository.updateTimelineId(
         roomId: result.getValue.roomId, timelineId: result.getValue.id!);
-    return AddTimelineResponse(timeline: result.getValue);
+
+    var roomResult = await _roomRepository.getRoomById(result.getValue.roomId);
+    if (roomResult.isError) {
+      throw roomResult.getError;
+    }
+    return AddTimelineResponse(
+        timelineDto: TimelineDto(
+            result.getValue.id!,
+            result.getValue.roomId,
+            roomResult.getValue.name,
+            result.getValue.content,
+            result.getValue.senderType,
+            result.getValue.createdAt));
   }
 }
