@@ -26,14 +26,12 @@ class FetchTimelineByRoomUsecase
       throw roomResult.getError;
     }
 
-    return FetchTimelineByRoomResponse(timelineListResult.getValue
-        .map((timeline) => TimelineDto(
-            timeline.id!,
-            timeline.roomId,
-            roomResult.getValue.name,
-            timeline.content,
-            timeline.senderType,
-            timeline.createdAt))
-        .toList());
+    var result = timelineListResult.getValue.asMap().entries.map((entry) {
+      final i = entry.key;
+      final x = entry.value;
+      return TimelineDto(x.id!, x.roomId, roomResult.getValue.name, x.content,
+          x.senderType, i == 0, i == timelineListResult.getValue.length-1, x.giftDate, x.createdAt);
+    }).toList();
+    return FetchTimelineByRoomResponse(result);
   }
 }

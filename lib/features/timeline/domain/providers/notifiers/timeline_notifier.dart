@@ -43,14 +43,14 @@ class TimelineNotifier extends StateNotifier<List<TimelineDto>> {
 
   void desc() {
     state.sort((a, b) =>
-        b.createdAt.millisecondsSinceEpoch -
-        a.createdAt.millisecondsSinceEpoch);
+        b.giftDate.millisecondsSinceEpoch -
+        a.giftDate.millisecondsSinceEpoch);
   }
 
   void asc() {
     state.sort((a, b) =>
-        a.createdAt.millisecondsSinceEpoch -
-        b.createdAt.millisecondsSinceEpoch);
+        a.giftDate.millisecondsSinceEpoch -
+        b.giftDate.millisecondsSinceEpoch);
   }
 
   void clearSelectedRoom() {

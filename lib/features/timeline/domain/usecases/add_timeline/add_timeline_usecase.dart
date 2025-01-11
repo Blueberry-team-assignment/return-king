@@ -42,6 +42,9 @@ class AddTimelineUsecase
             roomResult.getValue.name,
             result.getValue.content,
             result.getValue.senderType,
+            false,
+            true,
+            result.getValue.giftDate,
             result.getValue.createdAt));
   }
 }

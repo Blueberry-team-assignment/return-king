@@ -25,17 +25,22 @@ class FetchAllTimelineUsecase
       throw roomListResult.getError;
     }
 
-    // 상당히 마음에 듬
-    var roomMap = {
-      for (var room in roomListResult.getValue) room.id: room.name
-    };
-
     var timelineList = timelineListResult.getValue;
 
-    var result = timelineList
-        .map((x) => TimelineDto(x.id!, x.roomId, roomMap[x.id!] ?? '',
-            x.content, x.senderType, x.createdAt))
-        .toList();
+    var result = timelineList.asMap().entries.map((entry) {
+      final i = entry.key;
+      final x = entry.value;
+      return TimelineDto(
+          x.id!,
+          x.roomId,
+          roomListResult.value?.firstWhere((r) => r.id == x.roomId).name ?? '',
+          x.content,
+          x.senderType,
+          i == 0,
+          i == timelineList.length - 1,
+          x.giftDate,
+          x.createdAt);
+    }).toList();
 
     return FetchAllTimelineResponse(result);
   }

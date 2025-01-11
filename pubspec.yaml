@@ -55,6 +55,7 @@ dependencies:
   toggle_switch: ^2.3.0
   scroll_date_picker: ^3.8.0
   intl: ^0.19.0
+  timeline_tile: ^2.0.0
 
 dev_dependencies:
   flutter_test:

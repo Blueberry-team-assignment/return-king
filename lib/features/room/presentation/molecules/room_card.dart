@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:return_king/features/room/domain/enums/sender_type.dart';
@@ -39,64 +38,77 @@ class RoomCard extends ConsumerWidget {
         }
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
         child: Card(
-          color: Colors.indigo[50],
-          margin: const EdgeInsets.all(2),
-          shadowColor: Colors.black,
+          color: Colors.white,
+          elevation: 4,
+          shadowColor: Colors.black26,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(12),
           ),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 8.0, horizontal: 10.0),
-                child: IntrinsicHeight(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                /// 아이콘
+                Icon(
+                  Icons.wallet_giftcard,
+                  size: 40,
+                  color: Colors.indigo[300],
+                ),
+                const SizedBox(width: 16),
+
+                /// 텍스트 정보
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Icon(Icons.wallet_giftcard),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              room.lastTimeline?.senderType ==
-                                      SenderType.receiver
-                                  ? room.name
-                                  : '내가 준 선물',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14.0,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                            ),
-                            Text(
-                              room.lastTimeline?.content ??
-                                  '타임라인이 없습니다.',
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                            ),
-                          ],
-                        ),
-                      ),
+                      /// 제목 (룸 이름 또는 "내가 준 선물")
                       Text(
-                        room.lastTimeline?.createdAt != null
-                            ? DateFormat('yy/MM/dd')
-                                .format(room.lastTimeline!.createdAt)
-                            : '날짜 없음',
-                        textAlign: TextAlign.right,
+                        room.lastTimeline?.senderType == SenderType.receiver
+                            ? room.name
+                            : '내가 드린 선물',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
+                      ),
+                      const SizedBox(height: 6),
+
+                      /// 마지막 타임라인 내용
+                      Text(
+                        room.lastTimeline?.content ?? '타임라인이 없습니다.',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: room.lastTimeline?.content != null
+                              ? Colors.black54
+                              : Colors.redAccent,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                      ),
+                      const SizedBox(height: 10),
+
+                      /// 날짜
+                      Text(
+                        room.lastTimeline?.createdAt != null
+                            ? DateFormat('yyyy/MM/dd')
+                                .format(room.lastTimeline!.createdAt)
+                            : '날짜 없음',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey,
+                        ),
                       ),
                     ],
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

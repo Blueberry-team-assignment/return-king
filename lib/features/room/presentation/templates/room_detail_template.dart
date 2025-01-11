@@ -136,9 +136,12 @@ class RoomDetailTemplate extends ConsumerWidget {
         onPopInvokedWithResult: (isPopped, _) {
           // 뒤로가기 때 불리는 처리
           if (isPopped) {
-            ref
-                .read(selectedRoomProvider.notifier)
-                .clearSelectedRoom(); // 선택된 room정보를 초기화
+            // delay를 안주면 이동하는 동안 설정 값이 null로 표시가 되는 문제가 있음
+            Future.delayed(const Duration(milliseconds: 100), () {
+              ref
+                  .read(selectedRoomProvider.notifier)
+                  .clearSelectedRoom(); // 선택된 room정보를 초기화
+            });
           }
         },
         child: Scaffold(
@@ -181,25 +184,6 @@ class RoomDetailTemplate extends ConsumerWidget {
               Column(
                 children: [
                   Row(children: [
-                    Flexible(
-                      fit: FlexFit.tight,
-                      child: ToggleSwitch(
-                        initialLabelIndex: 0,
-                        minWidth: double.infinity,
-                        activeFgColor: Colors.white,
-                        inactiveBgColor: Colors.grey,
-                        inactiveFgColor: Colors.white,
-                        totalSwitches: 2,
-                        labels: [(getShortName(room?.name) ?? '👤'), '나에게'],
-                        activeBgColors: const [
-                          [Colors.blue],
-                          [Colors.pink]
-                        ],
-                        onToggle: (index) {
-                          selectedSenderType = SenderType.values[index!];
-                        },
-                      ),
-                    ),
                     ElevatedButton(
                       onPressed: () async {
                         showModalBottomSheet<void>(
@@ -266,7 +250,29 @@ class RoomDetailTemplate extends ConsumerWidget {
                           ? '오늘'
                           : DateFormat('yy/MM/dd')
                               .format(ref.watch(selectedGiftDateProvider))),
-                    )
+                    ),
+                    Flexible(
+                      fit: FlexFit.tight,
+                      child: ToggleSwitch(
+                        initialLabelIndex: 0,
+                        minWidth: double.infinity,
+                        activeFgColor: Colors.white,
+                        inactiveBgColor: Colors.grey,
+                        inactiveFgColor: Colors.white,
+                        totalSwitches: 2,
+                        labels: const [
+                          '내가 드린 선물',
+                          ('받은 선물' ?? '👤')
+                        ],
+                        activeBgColors: const [
+                          [Colors.blue],
+                          [Colors.deepOrange]
+                        ],
+                        onToggle: (index) {
+                          selectedSenderType = SenderType.values[index!];
+                        },
+                      ),
+                    ),
                   ]),
                   InputTimeline(
                     controller: messageController,

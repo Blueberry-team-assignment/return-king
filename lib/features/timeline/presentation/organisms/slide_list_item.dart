@@ -23,7 +23,7 @@ class SlideListItem extends StatelessWidget {
           SnackBar(content: Text('${timelineDto.id}를 삭제 했습니다.')),
         );
       },
-      child: TimelineRow(room: room, timelineDto: timelineDto),
+      child: TimelineRow(timelineDto: timelineDto),
     );
   }
 }
