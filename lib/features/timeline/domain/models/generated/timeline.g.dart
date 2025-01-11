@@ -13,6 +13,7 @@ _$TimelineImpl _$$TimelineImplFromJson(Map<String, dynamic> json) =>
       userId: json['userId'] as String,
       senderType: $enumDecode(_$SenderTypeEnumMap, json['senderType']),
       content: json['content'] as String,
+      giftDate: DateTime.parse(json['giftDate'] as String),
       createdAt: DateTime.parse(json['createdAt'] as String),
       deleted: json['deleted'] as bool,
     );
@@ -24,11 +25,12 @@ Map<String, dynamic> _$$TimelineImplToJson(_$TimelineImpl instance) =>
       'userId': instance.userId,
       'senderType': _$SenderTypeEnumMap[instance.senderType]!,
       'content': instance.content,
+      'giftDate': instance.giftDate.toIso8601String(),
       'createdAt': instance.createdAt.toIso8601String(),
       'deleted': instance.deleted,
     };
 
 const _$SenderTypeEnumMap = {
-  SenderType.sender: 'sender',
-  SenderType.receiver: 'receiver',
+  SenderType.me: 'me',
+  SenderType.other: 'other',
 };

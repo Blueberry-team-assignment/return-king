@@ -14,7 +14,7 @@ class RoomListNotifier extends StateNotifier<List<Room>> {
   Future<void> fetchRooms() async {
     FetchAllRoomResponse allRoomRes =
         await fetchAllRoomUsecase.execute(FetchAllRoomQuery());
-    desc();
+    asc();
     state = allRoomRes.roomList;
   }
 

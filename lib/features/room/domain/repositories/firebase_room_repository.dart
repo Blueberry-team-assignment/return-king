@@ -54,13 +54,13 @@ class FirebaseRoomRepository implements IRoomRepository {
       final doc = _firestore.collection(Constants.rooms).doc();
       final id = doc.id; // firestore가 생성한 ID
       final data = room
-        .copyWith(
-          id: id,
-          userId: FirebaseAuth.instance.currentUser?.uid ?? '',
-          deleted: false,
-          lastTimelineId: null,
-        )
-        .toJson();
+          .copyWith(
+            id: id,
+            userId: FirebaseAuth.instance.currentUser?.uid ?? '',
+            deleted: false,
+            lastTimelineId: null,
+          )
+          .toJson();
       await doc.set(data); // 발행된 Id와 doc id를 일치 시킴
       return Result.ok(Room.fromJson(data));
     } on Exception catch (e) {
@@ -69,10 +69,8 @@ class FirebaseRoomRepository implements IRoomRepository {
   }
 
   @override
-  Future<Result<bool>> updateTimelineId({
-    required String roomId,
-    required String timelineId
-  }) async {
+  Future<Result<bool>> updateTimelineId(
+      {required String roomId, required String timelineId}) async {
     try {
       await _firestore
           .collection(Constants.rooms)

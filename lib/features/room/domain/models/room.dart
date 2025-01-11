@@ -13,10 +13,11 @@ class Room with _$Room {
     required DateTime createdAt, // 생성 날짜 및 시간
     required bool deleted, // 삭제 여부
     required String? lastTimelineId, // 최신 Timeline의 ID (nullable)
+    // ignore: duplicate_ignore
     // ignore: invalid_annotation_target
-    @JsonKey(includeFromJson: false, includeToJson: false) Timeline? lastTimeline, // 최신 Timeline (nullable)
+    @JsonKey(includeFromJson: false, includeToJson: false)
+    Timeline? lastTimeline, // 최신 Timeline (nullable)
   }) = _Room;
 
   factory Room.fromJson(Map<String, dynamic> json) => _$RoomFromJson(json);
-
 }

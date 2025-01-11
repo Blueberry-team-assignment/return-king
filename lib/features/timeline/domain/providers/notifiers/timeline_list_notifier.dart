@@ -1,46 +1,29 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:return_king/features/room/domain/enums/sender_type.dart';
-import 'package:return_king/features/timeline/domain/models/timeline.dart';
-import 'package:return_king/features/timeline/domain/usecases/add_timeline/add_timeline_command.dart';
-import 'package:return_king/features/timeline/domain/usecases/add_timeline/add_timeline_response.dart';
-import 'package:return_king/features/timeline/domain/usecases/add_timeline/add_timeline_usecase.dart';
+import 'package:return_king/features/timeline/domain/models/dto/timeline_dto.dart';
 import 'package:return_king/features/timeline/domain/usecases/fetch_all_timeline/fetch_all_timeline_query.dart';
 import 'package:return_king/features/timeline/domain/usecases/fetch_all_timeline/fetch_all_timeline_response.dart';
 import 'package:return_king/features/timeline/domain/usecases/fetch_all_timeline/fetch_all_timeline_usecase.dart';
-import 'package:return_king/shared/result.dart';
 
-class TimelineListNotifier extends StateNotifier<List<Timeline>> {
-  TimelineListNotifier(this.addTimelineUsecase, this.fetchAllTimelineUsecase)
-      : super([]) {
-    fetchAllTimeline();
-  }
+class TimelineListNotifier extends StateNotifier<List<TimelineDto>> {
+  TimelineListNotifier(this.fetchAllTimelineUsecase) : super([]);
 
-  final AddTimelineUsecase addTimelineUsecase;
   final FetchAllTimelineUsecase fetchAllTimelineUsecase;
 
   Future<void> fetchAllTimeline() async {
     FetchAllTimelineResponse res =
         await fetchAllTimelineUsecase.execute(FetchAllTimelineQuery());
     state = res.timelines;
+    asc();
   }
 
-  Future<List<Timeline>> getAllTimeline() async {
-    return state;
+  void desc() {
+    state.sort((a, b) =>
+        b.giftDate.millisecondsSinceEpoch - a.giftDate.millisecondsSinceEpoch);
   }
 
-  Future<Result<Timeline>> addTimeline(
-      {required String roomId,
-      required SenderType senderType,
-      required String content,
-      required DateTime createdAt}) async {
-    AddTimelineResponse addTimelineUsecaseResult =
-        await addTimelineUsecase.execute(AddTimelineCommand(
-            roomId: roomId,
-            senderType: senderType,
-            content: content,
-            createdAt: createdAt));
-    state = [...state, addTimelineUsecaseResult.timeline];
-    return Result.ok(addTimelineUsecaseResult.timeline);
+  void asc() {
+    state.sort((a, b) =>
+        a.giftDate.millisecondsSinceEpoch - b.giftDate.millisecondsSinceEpoch);
   }
 
   void clearTimeline() {

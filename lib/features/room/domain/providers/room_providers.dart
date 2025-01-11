@@ -18,10 +18,12 @@ final roomListProvider = StateNotifierProvider<RoomListNotifier, List<Room>>(
 /// 선택된 room에 대한 상태관리용
 final selectedRoomProvider = StateNotifierProvider<RoomNotifier, Room?>((ref) {
   return RoomNotifier(
-    ref.read(addRoomUsecaseProvider),
-    ref.read(fetchRoomByIdUsecaseProvider)
-  );
+      ref.read(addRoomUsecaseProvider), ref.read(fetchRoomByIdUsecaseProvider));
 });
+
+// 룸 상세에서 선물을 받거준 날짜에 대한 상태관리
+final selectedGiftDateProvider =
+    StateProvider<DateTime>((ref) => DateTime.now());
 
 /// 상태관리 관련 End
 

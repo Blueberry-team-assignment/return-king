@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
+import 'package:return_king/features/room/domain/enums/sender_type.dart';
 import 'package:return_king/features/room/domain/models/room.dart';
 import 'package:return_king/features/room/domain/providers/room_providers.dart';
 import 'package:return_king/features/room/presentation/pages/room_detail_page.dart';
 import 'package:return_king/features/timeline/domain/providers/timeline_providers.dart';
-import 'package:return_king/shared/presentation/atoms/avatar.dart';
 
 class RoomCard extends ConsumerWidget {
   const RoomCard({
@@ -18,62 +19,99 @@ class RoomCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return InkWell(
       onTap: () async {
-        /// 상세 페이지로 이동하기 전에 데이터 취득 처리 실행
-        // 선택된 룸과 이어지는 타임라인을 취득
         if (room.id == null) {
           throw Exception('not selected Room');
         }
+
+        /// 데이터 가져오기
         await ref.read(selectedRoomProvider.notifier).fetchRoom(room.id!);
-        // room별 타임라인 취득
-        if (room.id != null) {
-          await ref
-              .read(selectedTimelineListByRoomIdProvider.notifier)
-              .fetchTimelineByRoomId(room.id!);
+        await ref
+            .read(selectedTimelineListByRoomIdProvider.notifier)
+            .fetchTimelineByRoomId(room.id!);
+
+        /// 안전하게 context 확인 후 화면 이동
+        if (context.mounted) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const RoomDetailPage()),
+          );
         }
-        // 상세 페이지로 이동
-        // ignore: use_build_context_synchronously
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const RoomDetailPage()));
       },
-      child: Card(
-        color: Colors.indigo[200], // Card自体の色
-        margin: const EdgeInsets.all(2),
-        shadowColor: Colors.black, // 影の色
-        shape: RoundedRectangleBorder(
-          // 枠線を変更できる
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Column(
-          children: [
-            Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
-                child: Row(
-                  children: [
-                    const Avatar(),
-                    const SizedBox(width: 12),
-                    Column(
-                      children: [
-                        Text(
-                          room.lastTimeline?.createdAt.toString() ?? '',
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+        child: Card(
+          color: Colors.white,
+          elevation: 4,
+          shadowColor: Colors.black26,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                /// 아이콘
+                Icon(
+                  Icons.wallet_giftcard,
+                  size: 40,
+                  color: Colors.indigo[300],
+                ),
+                const SizedBox(width: 16),
+
+                /// 텍스트 정보
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      /// 제목 (룸 이름 또는 "내가 준 선물")
+                      Text(
+                        room.name,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
                         ),
-                        Text(
-                          room.name,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                      const SizedBox(height: 6),
+
+                      /// 마지막 타임라인 내용
+                      Text(
+                        room.lastTimeline?.content == null
+                        ? '선물한 내용이 없습니다.'
+                        : '${room.lastTimeline?.senderType == SenderType.me
+                            ? room.name
+                            : '내가 받은 선물'} : ${room.lastTimeline?.content}',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: room.lastTimeline?.content != null
+                              ? Colors.black54
+                              : Colors.redAccent,
                         ),
-                        Text(
-                          room.lastTimeline?.content ?? '',
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                      ),
+                      const SizedBox(height: 10),
+
+                      /// 날짜
+                      Text(
+                        room.lastTimeline?.createdAt != null
+                            ? DateFormat('yyyy/MM/dd')
+                                .format(room.lastTimeline!.createdAt)
+                            : '날짜 없음',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey,
                         ),
-                      ],
-                    )
-                  ],
-                ))
-          ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

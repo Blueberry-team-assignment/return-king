@@ -52,6 +52,10 @@ dependencies:
   flutter_dotenv: ^5.2.1
   google_sign_in: ^6.2.2
   firebase_ui_oauth_google: ^1.4.0
+  toggle_switch: ^2.3.0
+  scroll_date_picker: ^3.8.0
+  intl: ^0.19.0
+  timeline_tile: ^2.0.0
 
 dev_dependencies:
   flutter_test:

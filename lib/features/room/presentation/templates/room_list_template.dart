@@ -17,8 +17,8 @@ class RoomListTemplate extends ConsumerWidget {
         actions: <Widget>[
           PlusButton(onPressed: () {
             ref
-              .read(selectedTimelineListByRoomIdProvider.notifier)
-              .clearSelectedRoom();
+                .read(selectedTimelineListByRoomIdProvider.notifier)
+                .clearSelectedRoom();
             Navigator.push(
                 context,
                 MaterialPageRoute(
