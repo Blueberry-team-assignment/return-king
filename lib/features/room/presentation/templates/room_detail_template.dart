@@ -262,7 +262,7 @@ class RoomDetailTemplate extends ConsumerWidget {
                         totalSwitches: 2,
                         labels: const [
                           '내가 드린 선물',
-                          ('받은 선물' ?? '👤')
+                          '받은 선물'
                         ],
                         activeBgColors: const [
                           [Colors.blue],
