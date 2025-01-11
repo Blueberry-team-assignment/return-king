@@ -41,10 +41,18 @@ class FetchAllRoomUsecase
     /// => Room리스트에서는 Timeline정보를 표시할 필요가 있음
     for (var roomData in allRoomList) {
       if (roomData.lastTimelineId != null) {
-        Timeline? lastTimeline =
-            allTimelineList.firstWhere((x) => x.id == roomData.lastTimelineId);
-        var room = roomData.copyWith(lastTimeline: lastTimeline);
-        rooms.add(room);
+        Timeline? lastTimeline = allTimelineList
+            .where(
+              (x) => x.id == roomData.lastTimelineId,
+            )
+            .firstOrNull;
+
+        if (lastTimeline == null) {
+          rooms.add(roomData);
+        } else {
+          rooms.add(roomData.copyWith(lastTimeline: lastTimeline));
+        }
+
       } else {
         rooms.add(roomData);
       }

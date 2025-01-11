@@ -11,6 +11,14 @@ class TimelineDto {
   final DateTime giftDate;
   final DateTime createdAt;
 
-  TimelineDto(this.id, this.roomId, this.roomName, this.content,
-      this.senderType, this.isFirst, this.isLast, this.giftDate, this.createdAt);
+  TimelineDto(
+      this.id,
+      this.roomId,
+      this.roomName,
+      this.content,
+      this.senderType,
+      this.isFirst,
+      this.isLast,
+      this.giftDate,
+      this.createdAt);
 }

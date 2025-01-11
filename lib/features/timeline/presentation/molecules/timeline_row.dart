@@ -11,7 +11,7 @@ class TimelineRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isSender = timelineDto.senderType == SenderType.sender;
+    final isSender = timelineDto.senderType == SenderType.other;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 6),
@@ -23,7 +23,7 @@ class TimelineRow extends StatelessWidget {
         beforeLineStyle: LineStyle(
           color: timelineDto.isFirst
               ? Colors.transparent
-              : (timelineDto.senderType == SenderType.receiver
+              : (timelineDto.senderType == SenderType.me
                   ? Colors.indigo
                   : Colors.deepOrange),
           thickness: timelineDto.isFirst ? 0 : 6,
@@ -31,18 +31,18 @@ class TimelineRow extends StatelessWidget {
         afterLineStyle: LineStyle(
           color: timelineDto.isLast
               ? Colors.transparent
-              : (timelineDto.senderType == SenderType.receiver
+              : (timelineDto.senderType == SenderType.me
                   ? Colors.indigo
                   : Colors.deepOrange),
           thickness: timelineDto.isLast ? 0 : 6,
         ),
         indicatorStyle: IndicatorStyle(
           width: 40,
-          color: timelineDto.senderType == SenderType.receiver
+          color: timelineDto.senderType == SenderType.me
               ? Colors.blue
               : Colors.red,
           iconStyle: IconStyle(
-            iconData:  Icons.card_giftcard,
+            iconData: Icons.card_giftcard,
             color: Colors.white,
           ),
         ),
@@ -53,7 +53,7 @@ class TimelineRow extends StatelessWidget {
   }
 
   Widget _buildContent(BuildContext context) {
-    final isSender = timelineDto.senderType == SenderType.sender;
+    final isSender = timelineDto.senderType == SenderType.other;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -61,7 +61,7 @@ class TimelineRow extends StatelessWidget {
             isSender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
           Text(
-            timelineDto.senderType == SenderType.sender
+            timelineDto.senderType == SenderType.other
                 ? '내가 받은 선물'
                 : '${timelineDto.roomName}에게',
             style: const TextStyle(

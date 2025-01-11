@@ -129,7 +129,7 @@ class RoomDetailTemplate extends ConsumerWidget {
     TextEditingController messageController = TextEditingController();
     TextEditingController titleController = TextEditingController();
     ScrollController scrollController = ScrollController();
-    SenderType selectedSenderType = SenderType.sender;
+    SenderType selectedSenderType = SenderType.me;
 
     final scaffoldMessenger = ScaffoldMessenger.of(context);
     return PopScope(
@@ -260,10 +260,7 @@ class RoomDetailTemplate extends ConsumerWidget {
                         inactiveBgColor: Colors.grey,
                         inactiveFgColor: Colors.white,
                         totalSwitches: 2,
-                        labels: const [
-                          '내가 드린 선물',
-                          '받은 선물'
-                        ],
+                        labels: const ['내가 드린 선물', '받은 선물'],
                         activeBgColors: const [
                           [Colors.blue],
                           [Colors.deepOrange]

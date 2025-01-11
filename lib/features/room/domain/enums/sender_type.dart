@@ -1,1 +1,1 @@
-enum SenderType { sender, receiver }
+enum SenderType { me, other }

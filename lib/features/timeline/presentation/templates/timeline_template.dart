@@ -10,13 +10,13 @@ class TimelineTemplate extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return timelineList.isNotEmpty ? ListView.builder(
-      itemCount: timelineList.length,
-      itemBuilder: (context, index) {
-        return SlideListItem(timelineDto: timelineList[index]);
-      },
-    ) : const Center(child: Text(
-      '등록된 타임라인이 없습니다.'
-    ));
+    return timelineList.isNotEmpty
+        ? ListView.builder(
+            itemCount: timelineList.length,
+            itemBuilder: (context, index) {
+              return SlideListItem(timelineDto: timelineList[index]);
+            },
+          )
+        : const Center(child: Text('등록된 타임라인이 없습니다.'));
   }
 }

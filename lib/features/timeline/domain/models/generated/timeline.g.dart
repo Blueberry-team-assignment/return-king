@@ -31,6 +31,6 @@ Map<String, dynamic> _$$TimelineImplToJson(_$TimelineImpl instance) =>
     };
 
 const _$SenderTypeEnumMap = {
-  SenderType.sender: 'sender',
-  SenderType.receiver: 'receiver',
+  SenderType.me: 'me',
+  SenderType.other: 'other',
 };

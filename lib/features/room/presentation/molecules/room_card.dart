@@ -66,9 +66,7 @@ class RoomCard extends ConsumerWidget {
                     children: [
                       /// 제목 (룸 이름 또는 "내가 준 선물")
                       Text(
-                        room.lastTimeline?.senderType == SenderType.receiver
-                            ? room.name
-                            : '내가 드린 선물',
+                        room.name,
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -81,7 +79,11 @@ class RoomCard extends ConsumerWidget {
 
                       /// 마지막 타임라인 내용
                       Text(
-                        room.lastTimeline?.content ?? '타임라인이 없습니다.',
+                        room.lastTimeline?.content == null
+                        ? '선물한 내용이 없습니다.'
+                        : '${room.lastTimeline?.senderType == SenderType.me
+                            ? room.name
+                            : '내가 드린 선물'} : ${room.lastTimeline?.content}',
                         style: TextStyle(
                           fontSize: 14,
                           color: room.lastTimeline?.content != null
