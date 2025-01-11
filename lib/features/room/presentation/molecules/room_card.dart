@@ -83,7 +83,7 @@ class RoomCard extends ConsumerWidget {
                         ? '선물한 내용이 없습니다.'
                         : '${room.lastTimeline?.senderType == SenderType.me
                             ? room.name
-                            : '내가 드린 선물'} : ${room.lastTimeline?.content}',
+                            : '내가 받은 선물'} : ${room.lastTimeline?.content}',
                         style: TextStyle(
                           fontSize: 14,
                           color: room.lastTimeline?.content != null
