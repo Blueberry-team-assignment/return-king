@@ -160,6 +160,9 @@ class RoomDetailTemplate extends ConsumerWidget {
         child: Scaffold(
           resizeToAvoidBottomInset: true, // 키보드가 올라오면 body를 리사이즈 해줌
           appBar: AppBar(
+              iconTheme: IconThemeData(
+                color: Colors.indigo[500]
+              ),
               leading: IconButton(
                   icon: const Icon(Icons.arrow_back),
                   onPressed: () {

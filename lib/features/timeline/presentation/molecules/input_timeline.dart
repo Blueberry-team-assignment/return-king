@@ -14,7 +14,9 @@ class InputTimeline extends StatelessWidget {
         color: Colors.indigo.shade200,
         child: SizedBox(
           height: 80,
-          child: Row(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+            child: Row(
             children: [
               Expanded(
                   child: TextField(
@@ -28,6 +30,7 @@ class InputTimeline extends StatelessWidget {
               )
             ],
           ),
+          ) ,
         ));
   }
 }

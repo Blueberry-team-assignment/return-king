@@ -38,7 +38,7 @@ class RoomCard extends ConsumerWidget {
         }
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+        padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 4.0),
         child: Card(
           color: Colors.white,
           elevation: 4,
