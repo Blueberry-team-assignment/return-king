@@ -1,3 +1,4 @@
+[[_TOC_]]
 # 답례왕
 
 ## 프로젝트 소개
@@ -6,6 +7,29 @@
 - 받은 선물을 기록하고 답례 내용을 등록합니다.
 - 먼저 배풀 수도 있는 것이니 준 선물도 역시 등록이 가능합니다.
 - 경조사의 출입금에 대해서도 관리되도록 할 생각입니다.
+
+
+<br>
+
+
+## 앱 이미지
+<div align="center">
+
+| **로그인 화면** | **빈 룸 리스트 화면** | **빈 타임라인 리스트 화면** |
+|------------------|-----------------------|-----------------------------|
+| <img src="./app-images/1.sign-in.png" width="200"> | <img src="./app-images/2.room-list-empty.png" width="200"> | <img src="./app-images/3.timeline-list-empty.png" width="200"> |
+| 구글 계정 로그인이 가능하도록 작업 | 데이터가 없을 때 초기 표시(룸 탭) | 데이터가 없을 때 타임라인 탭 표시 |
+
+| **새로운 룸 생성 화면** | **날짜 선택 화면** | **로그아웃 화면** |
+|-------------------------|-------------------|-------------------|
+| <img src="./app-images/4.new-room.png" width="200"> | <img src="./app-images/5.date-picker.png" width="200"> | <img src="./app-images/6.logout.png" width="200"> |
+| 좌측 상단의 + 버튼 혹은 데이터가<br> 없을 때 룸 탭에서 작성 버튼을<br> 눌렀을 때 이동되는 화면 | 오늘 버튼을 누르면 날짜를<br> 고를 수 있는 date picker가<br> 표시 됨 | 메인화면 우측상단의 사람 모양을<br> 누르면 보이는 화면 |
+
+| **룸 리스트 화면** | **타임라인 리스트 화면** | **현재 룸 상세 화면** |
+|--------------------|-------------------------|----------------------|
+| <img src="./app-images/7.room-list.png" width="200"> | <img src="./app-images/8.timeline-list.png" width="200"> | <img src="./app-images/9.current-room.png" width="200"> |
+| 룸이 존재할 때 표시 | 타임라인이 존재할 때 표시<br>(타임라인은 룸과 상관없이<br>모든 타임라인을 표시) | 정보가 등록된 룸의 상세화면 |
+</div>
 
 <br>
 
@@ -95,6 +119,7 @@ Doctor summary (to see all details, run flutter doctor -v):<br>
 
 ## 3. 프로젝트 구조
 
+![project](./project.png)
 ```
  ┣ 📂features
  ┃    ┣ 📂home
@@ -172,6 +197,8 @@ Doctor summary (to see all details, run flutter doctor -v):<br>
 
 <br>
 
+## 4. 표현
+
 > https://atomicdesign.bradfrost.com/chapter-2/?source=post_page-----2bb4d9ca5f97--------------------------------
 > https://zenn.dev/nagakuta/articles/25c8aaf7744830bdab3d
 > 참고 자료
@@ -206,7 +233,7 @@ Doctor summary (to see all details, run flutter doctor -v):<br>
 
 <br>
 
-# **StateProvider vs StateNotifierProvider**
+## **StateProvider vs StateNotifierProvider**
 
 | **특성**             | **StateProvider**                           | **StateNotifierProvider**                     |
 |----------------------|---------------------------------------------|-----------------------------------------------|
@@ -220,7 +247,7 @@ Doctor summary (to see all details, run flutter doctor -v):<br>
 
 ---
 
-## **선택 기준**
+### **선택 기준**
 1. **단순한 상태 관리**:
    - `StateProvider`를 사용.
    - 예: 스위치 토글, 숫자 카운터.
@@ -231,7 +258,7 @@ Doctor summary (to see all details, run flutter doctor -v):<br>
 
 ---
 
-## **프로젝트에 적용**
+### **프로젝트에 적용**
 
 - **`roomListProvider`**:
   - **Provider Type**: `StateNotifierProvider`
@@ -241,7 +268,7 @@ Doctor summary (to see all details, run flutter doctor -v):<br>
   - **Provider Type**: `StateProvider`
   - **이유**: 단일 `Room` 선택 상태를 관리하므로 단순한 상태 관리에 적합.
 
-### ref.read vs ref.watch 차이점 요약
+#### ref.read vs ref.watch 차이점 요약
 
 | Feature                  | `ref.read`                          | `ref.watch`                        |
 |--------------------------|--------------------------------------|------------------------------------|
@@ -250,7 +277,7 @@ Doctor summary (to see all details, run flutter doctor -v):<br>
 | **사용 위치**            | 이벤트 핸들러, 초기화 로직           | UI 빌드 함수, 상태 의존적인 로직    |
 | **성능 영향**            | 낮음                                | 상태 변경 시 UI 빌드 비용 발생      |
 
-#### **적합한 선택 가이드**
+##### **적합한 선택 가이드**
 1. **`ref.read`**: 
    - 상태를 한 번 읽고 끝나는 경우.
    - 상태 변경과 무관한 로직에서 사용.
