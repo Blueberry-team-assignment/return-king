@@ -27,6 +27,10 @@ class FetchAllTimelineUsecase
 
     var timelineList = timelineListResult.getValue;
 
+    timelineList.sort((a, b) =>
+        a.giftDate.millisecondsSinceEpoch - b.giftDate.millisecondsSinceEpoch);
+
+
     var result = timelineList.asMap().entries.map((entry) {
       final i = entry.key;
       final x = entry.value;

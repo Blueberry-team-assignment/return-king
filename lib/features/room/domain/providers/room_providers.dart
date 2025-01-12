@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:return_king/features/room/domain/enums/sender_type.dart';
 import 'package:return_king/features/room/domain/models/room.dart';
 import 'package:return_king/features/room/domain/providers/notifiers/room_list_notifier.dart';
 import 'package:return_king/features/room/domain/providers/notifiers/room_notifier.dart';
@@ -21,9 +23,16 @@ final selectedRoomProvider = StateNotifierProvider<RoomNotifier, Room?>((ref) {
       ref.read(addRoomUsecaseProvider), ref.read(fetchRoomByIdUsecaseProvider));
 });
 
-// 룸 상세에서 선물을 받거준 날짜에 대한 상태관리
+// 룸 상세 상태관리 Start
 final selectedGiftDateProvider =
-    StateProvider<DateTime>((ref) => DateTime.now());
+    StateProvider<DateTime>((ref) => DateTime.now()); // 선물을 받거준 날짜
+final selectedSenderTypeProvider =
+    StateProvider<SenderType>((ref) => SenderType.other); // 준 사람
+final messageControllerProvider =
+    StateProvider<TextEditingController>((ref) => TextEditingController());// 메세지 컨트롤러
+final titleControllerProvider =
+    StateProvider<TextEditingController>((ref) => TextEditingController());// 타이틀 컨트롤러
+// 룸 상세 상태관리 End
 
 /// 상태관리 관련 End
 

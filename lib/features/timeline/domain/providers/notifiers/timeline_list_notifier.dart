@@ -13,17 +13,6 @@ class TimelineListNotifier extends StateNotifier<List<TimelineDto>> {
     FetchAllTimelineResponse res =
         await fetchAllTimelineUsecase.execute(FetchAllTimelineQuery());
     state = res.timelines;
-    asc();
-  }
-
-  void desc() {
-    state.sort((a, b) =>
-        b.giftDate.millisecondsSinceEpoch - a.giftDate.millisecondsSinceEpoch);
-  }
-
-  void asc() {
-    state.sort((a, b) =>
-        a.giftDate.millisecondsSinceEpoch - b.giftDate.millisecondsSinceEpoch);
   }
 
   void clearTimeline() {
