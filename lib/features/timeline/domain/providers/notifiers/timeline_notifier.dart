@@ -20,7 +20,6 @@ class TimelineNotifier extends StateNotifier<List<TimelineDto>> {
     FetchTimelineByRoomResponse res = await fetchTimelineByRoomUsecase
         .execute(FetchTimelineByRoomQuery(roomId: roomId));
     state = res.timelineDtoList;
-    print(state.map((e) => '${e.giftDate}, ${e.isFirst}, ${e.isLast}'));
     return Result.ok(state);
   }
 

@@ -248,7 +248,6 @@ class RoomDetailTemplate extends ConsumerWidget {
                                                 label: '일',
                                               )),
                                       onDateTimeChanged: (DateTime value) {
-                                        print('change, ${value.toIso8601String()}');
                                         ref
                                             .read(selectedGiftDateProvider
                                                 .notifier)
