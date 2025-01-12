@@ -26,20 +26,18 @@ class FetchTimelineByRoomUsecase
       throw roomResult.getError;
     }
 
-    var result = timelineListResult.getValue.asMap().entries.map((entry) {
-      final i = entry.key;
-      final x = entry.value;
-      return TimelineDto(
-          x.id!,
-          x.roomId,
-          roomResult.getValue.name,
-          x.content,
-          x.senderType,
-          i == 0,
-          i == timelineListResult.getValue.length - 1,
-          x.giftDate,
-          x.createdAt);
+    var list = timelineListResult.getValue;
+
+    list.sort((a, b) =>
+        a.giftDate.millisecondsSinceEpoch - b.giftDate.millisecondsSinceEpoch);
+
+    var result = list.asMap().entries.map((entry) {
+      var i = entry.key;
+      var v = entry.value;
+      return TimelineDto(v.id!, v.roomId, roomResult.getValue.name, v.content,
+          v.senderType, i == 0, i == list.length - 1, v.giftDate, v.createdAt);
     }).toList();
+
     return FetchTimelineByRoomResponse(result);
   }
 }

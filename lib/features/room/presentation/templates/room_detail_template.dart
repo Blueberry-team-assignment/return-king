@@ -100,7 +100,7 @@ class RoomDetailTemplate extends ConsumerWidget {
       const SnackBar(content: Text('타임라인 추가 성공.')),
     );
 
-    messageController.text = '';
+    resetState(ref);
 
     // 스크롤을 가장 아래로 이동
     Future.delayed(const Duration(milliseconds: 100), () {
@@ -124,12 +124,21 @@ class RoomDetailTemplate extends ConsumerWidget {
     });
   }
 
+  void resetState(WidgetRef ref) {
+    ref.read(messageControllerProvider.notifier).state.clear();
+    ref.read(titleControllerProvider.notifier).state.clear();
+    ref.read(selectedSenderTypeProvider.notifier).state = SenderType.me;
+    ref.read(selectedGiftDateProvider.notifier).state = DateTime.now();
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    TextEditingController messageController = TextEditingController();
-    TextEditingController titleController = TextEditingController();
+    TextEditingController messageController =
+        ref.watch(messageControllerProvider);
+    TextEditingController titleController = ref.watch(titleControllerProvider);
     ScrollController scrollController = ScrollController();
-    SenderType selectedSenderType = SenderType.me;
+    SenderType selectedSenderType = ref.watch(selectedSenderTypeProvider);
+    DateTime selectedGiftDate = ref.watch(selectedGiftDateProvider);
 
     final scaffoldMessenger = ScaffoldMessenger.of(context);
     return PopScope(
@@ -137,6 +146,10 @@ class RoomDetailTemplate extends ConsumerWidget {
           // 뒤로가기 때 불리는 처리
           if (isPopped) {
             // delay를 안주면 이동하는 동안 설정 값이 null로 표시가 되는 문제가 있음
+
+            if (context.mounted) {
+              resetState(ref);
+            }
             Future.delayed(const Duration(milliseconds: 100), () {
               ref
                   .read(selectedRoomProvider.notifier)
@@ -177,8 +190,11 @@ class RoomDetailTemplate extends ConsumerWidget {
                       controller: scrollController,
                       itemCount: timelineDtoList.length,
                       itemBuilder: (context, index) {
+                          final hasPrevious = index > 0;
+                          final previousTimeline = hasPrevious ? timelineDtoList[index - 1] : null;
+                          final currentTimeline = timelineDtoList[index];
                         return SlideListItem(
-                            room: room, timelineDto: timelineDtoList[index]);
+                            room: room, currentTimelineDto: currentTimeline, prevTimelineDto: previousTimeline, hasPrevious: hasPrevious);
                       },
                     )),
               Column(
@@ -190,7 +206,10 @@ class RoomDetailTemplate extends ConsumerWidget {
                           context: context,
                           builder: (BuildContext context) {
                             return Consumer(
+                              // Consumer를 상요해서 Riverpod의 상태를 감지하기 위해서 사용
                               builder: (context, ref, child) {
+                              // 모달 내부에서 상태관리를 감지하고 위젯을 갱신할 수 있도록 모달 내부에서 상태변화를 감지하도록 설정
+                              DateTime selectedGiftDate = ref.watch(selectedGiftDateProvider);
                                 return Column(children: [
                                   Container(
                                     alignment: Alignment.centerRight,
@@ -211,8 +230,7 @@ class RoomDetailTemplate extends ConsumerWidget {
                                   SizedBox(
                                     height: 250,
                                     child: ScrollDatePicker(
-                                      selectedDate:
-                                          ref.watch(selectedGiftDateProvider),
+                                      selectedDate: selectedGiftDate,
                                       locale: const Locale('ko'),
                                       scrollViewOptions:
                                           const DatePickerScrollViewOptions(
@@ -230,6 +248,7 @@ class RoomDetailTemplate extends ConsumerWidget {
                                                 label: '일',
                                               )),
                                       onDateTimeChanged: (DateTime value) {
+                                        print('change, ${value.toIso8601String()}');
                                         ref
                                             .read(selectedGiftDateProvider
                                                 .notifier)
@@ -245,11 +264,9 @@ class RoomDetailTemplate extends ConsumerWidget {
                       },
                       child: Text(DateFormat('yy/MM/dd')
                                   .format(DateTime.now()) ==
-                              DateFormat('yy/MM/dd')
-                                  .format(ref.watch(selectedGiftDateProvider))
+                              DateFormat('yy/MM/dd').format(selectedGiftDate)
                           ? '오늘'
-                          : DateFormat('yy/MM/dd')
-                              .format(ref.watch(selectedGiftDateProvider))),
+                          : DateFormat('yy/MM/dd').format(selectedGiftDate)),
                     ),
                     Flexible(
                       fit: FlexFit.tight,
@@ -266,7 +283,8 @@ class RoomDetailTemplate extends ConsumerWidget {
                           [Colors.deepOrange]
                         ],
                         onToggle: (index) {
-                          selectedSenderType = SenderType.values[index!];
+                          ref.read(selectedSenderTypeProvider.notifier).state =
+                              SenderType.values[index!];
                         },
                       ),
                     ),

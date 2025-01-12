@@ -20,8 +20,8 @@ class TimelineNotifier extends StateNotifier<List<TimelineDto>> {
     FetchTimelineByRoomResponse res = await fetchTimelineByRoomUsecase
         .execute(FetchTimelineByRoomQuery(roomId: roomId));
     state = res.timelineDtoList;
-    asc();
-    return Result.ok(res.timelineDtoList);
+    print(state.map((e) => '${e.giftDate}, ${e.isFirst}, ${e.isLast}'));
+    return Result.ok(state);
   }
 
   Future<Result<TimelineDto>> addTimeline(
@@ -39,16 +39,6 @@ class TimelineNotifier extends StateNotifier<List<TimelineDto>> {
             createdAt: createdAt));
     state = [...state, addTimelineUsecaseResult.timelineDto];
     return Result.ok(addTimelineUsecaseResult.timelineDto);
-  }
-
-  void desc() {
-    state.sort((a, b) =>
-        b.giftDate.millisecondsSinceEpoch - a.giftDate.millisecondsSinceEpoch);
-  }
-
-  void asc() {
-    state.sort((a, b) =>
-        a.giftDate.millisecondsSinceEpoch - b.giftDate.millisecondsSinceEpoch);
   }
 
   void clearSelectedRoom() {

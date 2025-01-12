@@ -14,7 +14,10 @@ class TimelineTemplate extends ConsumerWidget {
         ? ListView.builder(
             itemCount: timelineList.length,
             itemBuilder: (context, index) {
-              return SlideListItem(timelineDto: timelineList[index]);
+              final hasPrevious = index > 0;
+              final previousTimeline = hasPrevious ? timelineList[index - 1] : null;
+              final currentTimeline = timelineList[index];
+              return SlideListItem(currentTimelineDto: currentTimeline, prevTimelineDto: previousTimeline, hasPrevious: hasPrevious);
             },
           )
         : const Center(child: Text('등록된 타임라인이 없습니다.'));
